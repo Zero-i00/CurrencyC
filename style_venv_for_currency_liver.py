@@ -381,10 +381,10 @@ class Ui_MainWindow(object):
         self.NUMBERS_CURRENCIES.setObjectName("NUMBERS_CURRENCIES")
         self.Currency_USD = QtWidgets.QLabel(self.verticalLayoutWidget_2)
         self.Currency_USD.setMinimumSize(QtCore.QSize(150, 50))
-        self.Currency_USD.setMaximumSize(QtCore.QSize(153, 80))
+        self.Currency_USD.setMaximumSize(QtCore.QSize(170, 80))
         font = QtGui.QFont()
         font.setFamily("MS Reference Sans Serif")
-        font.setPointSize(20)
+        font.setPointSize(18)
         self.Currency_USD.setFont(font)
         self.Currency_USD.setStyleSheet("QLabel {\n"
 "    border-radius: 20px;\n"
@@ -401,10 +401,10 @@ class Ui_MainWindow(object):
         self.NUMBERS_CURRENCIES.addWidget(self.Currency_USD)
         self.Currency_EUR = QtWidgets.QLabel(self.verticalLayoutWidget_2)
         self.Currency_EUR.setMinimumSize(QtCore.QSize(150, 50))
-        self.Currency_EUR.setMaximumSize(QtCore.QSize(153, 80))
+        self.Currency_EUR.setMaximumSize(QtCore.QSize(170, 80))
         font = QtGui.QFont()
         font.setFamily("MS Reference Sans Serif")
-        font.setPointSize(22)
+        font.setPointSize(18)
         self.Currency_EUR.setFont(font)
         self.Currency_EUR.setStyleSheet("QLabel {\n"
 "    border-radius: 20px;\n"
@@ -421,10 +421,10 @@ class Ui_MainWindow(object):
         self.NUMBERS_CURRENCIES.addWidget(self.Currency_EUR)
         self.Currency_GBP = QtWidgets.QLabel(self.verticalLayoutWidget_2)
         self.Currency_GBP.setMinimumSize(QtCore.QSize(150, 50))
-        self.Currency_GBP.setMaximumSize(QtCore.QSize(153, 80))
+        self.Currency_GBP.setMaximumSize(QtCore.QSize(170, 80))
         font = QtGui.QFont()
         font.setFamily("MS Reference Sans Serif")
-        font.setPointSize(20)
+        font.setPointSize(18)
         self.Currency_GBP.setFont(font)
         self.Currency_GBP.setStyleSheet("QLabel {\n"
 "    border-radius: 20px;\n"
@@ -441,10 +441,10 @@ class Ui_MainWindow(object):
         self.NUMBERS_CURRENCIES.addWidget(self.Currency_GBP)
         self.Currency_TRY = QtWidgets.QLabel(self.verticalLayoutWidget_2)
         self.Currency_TRY.setMinimumSize(QtCore.QSize(150, 50))
-        self.Currency_TRY.setMaximumSize(QtCore.QSize(153, 80))
+        self.Currency_TRY.setMaximumSize(QtCore.QSize(170, 80))
         font = QtGui.QFont()
         font.setFamily("MS Reference Sans Serif")
-        font.setPointSize(20)
+        font.setPointSize(18)
         self.Currency_TRY.setFont(font)
         self.Currency_TRY.setStyleSheet("QLabel {\n"
 "    border-radius: 20px;\n"
@@ -461,10 +461,10 @@ class Ui_MainWindow(object):
         self.NUMBERS_CURRENCIES.addWidget(self.Currency_TRY)
         self.Currency_JPY = QtWidgets.QLabel(self.verticalLayoutWidget_2)
         self.Currency_JPY.setMinimumSize(QtCore.QSize(150, 50))
-        self.Currency_JPY.setMaximumSize(QtCore.QSize(153, 80))
+        self.Currency_JPY.setMaximumSize(QtCore.QSize(170, 80))
         font = QtGui.QFont()
         font.setFamily("MS Reference Sans Serif")
-        font.setPointSize(20)
+        font.setPointSize(18)
         self.Currency_JPY.setFont(font)
         self.Currency_JPY.setStyleSheet("QLabel {\n"
 "    border-radius: 20px;\n"
@@ -481,10 +481,10 @@ class Ui_MainWindow(object):
         self.NUMBERS_CURRENCIES.addWidget(self.Currency_JPY)
         self.Currency_AUD = QtWidgets.QLabel(self.verticalLayoutWidget_2)
         self.Currency_AUD.setMinimumSize(QtCore.QSize(150, 50))
-        self.Currency_AUD.setMaximumSize(QtCore.QSize(153, 80))
+        self.Currency_AUD.setMaximumSize(QtCore.QSize(170, 80))
         font = QtGui.QFont()
         font.setFamily("MS Reference Sans Serif")
-        font.setPointSize(20)
+        font.setPointSize(18)
         font.setKerning(True)
         self.Currency_AUD.setFont(font)
         self.Currency_AUD.setStyleSheet("QLabel {\n"
@@ -502,10 +502,10 @@ class Ui_MainWindow(object):
         self.NUMBERS_CURRENCIES.addWidget(self.Currency_AUD)
         self.Currency_BTC = QtWidgets.QLabel(self.verticalLayoutWidget_2)
         self.Currency_BTC.setMinimumSize(QtCore.QSize(150, 50))
-        self.Currency_BTC.setMaximumSize(QtCore.QSize(153, 80))
+        self.Currency_BTC.setMaximumSize(QtCore.QSize(170, 80))
         font = QtGui.QFont()
         font.setFamily("MS Reference Sans Serif")
-        font.setPointSize(20)
+        font.setPointSize(18)
         self.Currency_BTC.setFont(font)
         self.Currency_BTC.setStyleSheet("QLabel {\n"
 "    border-radius: 20px;\n"
@@ -522,10 +522,10 @@ class Ui_MainWindow(object):
         self.NUMBERS_CURRENCIES.addWidget(self.Currency_BTC)
         self.Currency_ETH = QtWidgets.QLabel(self.verticalLayoutWidget_2)
         self.Currency_ETH.setMinimumSize(QtCore.QSize(150, 50))
-        self.Currency_ETH.setMaximumSize(QtCore.QSize(153, 80))
+        self.Currency_ETH.setMaximumSize(QtCore.QSize(170, 80))
         font = QtGui.QFont()
         font.setFamily("MS Reference Sans Serif")
-        font.setPointSize(20)
+        font.setPointSize(18)
         self.Currency_ETH.setFont(font)
         self.Currency_ETH.setStyleSheet("QLabel {\n"
 "    border-radius: 20px;\n"
