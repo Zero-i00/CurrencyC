@@ -2,15 +2,11 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 from style_venv_for_currency_liver import Ui_MainWindow
-import sys
-import time
+import sys, time, json, lxml
 from forex_python.converter import CurrencyRates, CurrencyCodes
 from forex_python.bitcoin import BtcConverter
-import asyncio
-import json
 import requests
 from bs4 import BeautifulSoup
-import lxml
 from pyowm import OWM
 import pyowm
 import smtplib
@@ -35,6 +31,7 @@ dict_of_changes = {
     'OilBrent': [],
     'OilWTI': [],
     'Gold': [],
+    'Silver': [],
     'Platinum': [],
     'Palladium': [],
     'Gas': [],
@@ -44,56 +41,56 @@ dict_of_changes = {
     'Yandex': [],
     'Tesla': [],
     'Apple': [],
+    'time': []
 
 }
 
 
-list_time = []
 
 
-def USD(c):
+def currency_difference_USD(c):
     value = c.get_rate('USD', 'RUB')
     value = round(value, 2)
     return value
 
 
-def GBP(c):
+def currency_difference_GBP(c):
     value = c.get_rate('GBP', 'RUB')
     value = round(value, 2)
     return value
 
 
-def EUR(c):
+def currency_difference_EUR(c):
     value = c.get_rate('EUR', 'RUB')
     value = round(value, 2)
     return value
 
 
-def TRY(c):
+def currency_difference_TRY(c):
     value = c.get_rate('TRY', 'RUB')
     value = round(value, 2)
     return value
 
 
-def JPY(c):
+def currency_difference_JPY(c):
     value = c.get_rate('JPY', 'RUB')
     value = round(value, 2)
     return value
 
 
-def AUD(c):
+def currency_difference_AUD(c):
     value = c.get_rate('AUD', 'RUB')
     value = round(value, 2)
     return value
 
 
-def BTC(b):
+def currency_difference_BTC(b):
     value = b.get_latest_price('RUB')
     value = round(value, 2)
     return value
 
 
-def ETH(c):
+def currency_difference_ETH(c):
     url = 'https://ru.investing.com/crypto/ethereum/chart'
 
     HEADERS = {
@@ -101,8 +98,7 @@ def ETH(c):
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.128 Safari/537.36',
     }
     req = requests.get(url, headers=HEADERS)
-    src = req.text
-    soup = BeautifulSoup(src, "lxml")
+    soup = BeautifulSoup(req.text, "lxml")
     price_ETH_to_USD = soup.find('span', {'class': 'inlineblock', 'dir': 'ltr'}, ).find('span', {
         'id': 'last_last'}).text.replace('.', '').replace(',', '.')
     value_RUB = c.get_rate('USD', 'RUB')
@@ -120,8 +116,7 @@ class Products:
         }
 
         self.req = requests.get(self.url, headers=self.HEADERS)
-        self.src = self.req.text
-        self.soup = BeautifulSoup(self.src, 'lxml')
+        self.soup = BeautifulSoup(self.req.text, 'lxml')
 
     def OilBrent(self):
         price_Brent = self.soup.find('td', {'id': 'sb_last_8833'}).text.replace('.', '').replace(',', '.')
@@ -167,8 +162,7 @@ class Stocks:
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.128 Safari/537.36'
         }
         self.req = requests.get(self.url, headers=self.HEADERS)
-        self.src = self.req.text
-        self.soup = BeautifulSoup(self.src, 'lxml')
+        self.soup = BeautifulSoup(self.req.text, 'lxml')
 
     def Sberbank(self):
         stocks_Sberbank = self.soup.find('td', {'id': 'sb_last_39214'}).text.replace('.', '').replace(',', '.')
@@ -186,7 +180,7 @@ class Stocks:
         return stocks_Lukoil
 
     def Yandex(self):
-        stocks_Yandex = self.soup.find('td', {'id': 'sb_last_13999'}).text.replace('.', '').replace(',', '.')
+        stocks_Yandex = self.soup.find('td', {'id': 'sb_last_102063'}).text.replace('.', '').replace(',', '.')
         stocks_Yandex = round(float(stocks_Yandex), 2)
         return stocks_Yandex
 
@@ -205,7 +199,7 @@ products = Products()
 stocks = Stocks()
 
 
-def Weather():
+def weather():
     owm = OWM('f53ec5e445bf9fde80baa7338611fe61')
     city = input('city')
     mgr = owm.weather_manager()
@@ -217,7 +211,7 @@ def Weather():
     return temperature_celsius, temperature_fahrenheit
 
 
-def Convent_currency():
+def convent_currency():
     global c
 
     input_currency = ui.Input_currency.text().upper()  # Из какой
@@ -231,11 +225,11 @@ def Convent_currency():
         ui.Output_amount.setText(str(output_amount))
     elif input_currency == 'ETH':
         convert = c.get_rate('USD', output_currency)
-        output_amount = round(float(ETH(c)[1]) * float(amount) * float(convert), 2)
+        output_amount = round(float(currency_difference_ETH(c)[1]) * float(amount) * float(convert), 2)
         ui.Output_amount.setText(str(output_amount))
     elif output_currency == 'ETH':
         convert = c.get_rate(input_currency, 'USD')
-        output_amount = round(float(ETH(c)[1]) / (float(convert) * float(amount)), 2)
+        output_amount = round(float(currency_difference_ETH(c)[1]) / (float(convert) * float(amount)), 2)
         ui.Output_amount.setText(str(output_amount))
     else:
         convert = c.get_rate(input_currency, output_currency)
@@ -244,7 +238,7 @@ def Convent_currency():
         ui.Output_amount.setText(str(output_amount))
 
 
-def Email():
+def email():
     server = 'smtp.gmail.com'
     user = 'currencycgraduation@gmail.com'  # Email нашей программы
     password = 'CyCGn1605'  # Пороль
@@ -290,7 +284,7 @@ def excel():
     sheet = book.active
 
     while count != len(USD):
-        sheet[f'A{count_number}'] = Currency[count_res_Currency]
+        sheet['A{0}'.format(count_number)] = Currency[count_res_Currency]
         sheet.cell(row=1, column=count_column).value = time[count_res_time]
         sheet.cell(row=2, column=count_column).value = USD[count]
         sheet.cell(row=3, column=count_column).value = EUR[count]
@@ -315,14 +309,14 @@ def update():
     l_time = time.localtime()
     current_time = time.strftime('%H:%M', l_time)
 
-    ui.Currency_USD.setText(str(USD(c)) + '  ₽')
-    ui.Currency_GBP.setText(str(GBP(c)) + '  ₽')
-    ui.Currency_EUR.setText(str(EUR(c)) + '  ₽')
-    ui.Currency_TRY.setText(str(TRY(c)) + '  ₽')
-    ui.Currency_JPY.setText(str(JPY(c)) + '  ₽')
-    ui.Currency_AUD.setText(str(AUD(c)) + '  ₽')
-    ui.Currency_BTC.setText(str(BTC(b)) + '  ₽')
-    ui.Currency_ETH.setText(str(ETH(c)[0]) + '  ₽')
+    ui.Currency_USD.setText(str(currency_difference_USD(c)) + '  ₽')
+    ui.Currency_GBP.setText(str(currency_difference_GBP(c)) + '  ₽')
+    ui.Currency_EUR.setText(str(currency_difference_EUR(c)) + '  ₽')
+    ui.Currency_TRY.setText(str(currency_difference_TRY(c)) + '  ₽')
+    ui.Currency_JPY.setText(str(currency_difference_JPY(c)) + '  ₽')
+    ui.Currency_AUD.setText(str(currency_difference_AUD(c)) + '  ₽')
+    ui.Currency_BTC.setText(str(currency_difference_BTC(b)) + '  ₽')
+    ui.Currency_ETH.setText(str(currency_difference_ETH(c)[0]) + '  ₽')
     ui.Course_Gold.setText(str(products.Gold()) + '  ₽')
     ui.Course_Silver.setText(str(products.Silver()) + '  ₽')
     ui.Course_Platinum.setText(str(products.Platinum()) + '  ₽')
@@ -330,47 +324,38 @@ def update():
     ui.Course_Brent.setText(str(products.OilBrent()) + '  ₽')
     ui.Course_WTI.setText(str(products.OilWTI()) + '  ₽')
     ui.Course_Gas.setText(str(products.Gas()) + '  ₽')
+    ui.Stocks_Sberbank.setText(str(stocks.Sberbank()) + '  ₽')
+    ui.Stocks_Gazprom.setText(str(stocks.Gazprom()) + '  ₽')
+    ui.Stocks_Lukoil.setText(str(stocks.Lukoil()) + '  ₽')
+    ui.Stocks_Yandex.setText(str(stocks.Yandex()) + '  ₽')
+    ui.Stocks_Tesla.setText(str(stocks.Tesla()) + '  ₽')
+    ui.Stocks_Apple.setText(str(stocks.Apple()) + '  ₽')
 
-    dict_of_changes['USD'].append(USD(c))
-    dict_of_changes['GBP'].append(GBP(c))
-    dict_of_changes['EUR'].append(EUR(c))
-    dict_of_changes['TRY'].append(TRY(c))
-    dict_of_changes['JPY'].append(JPY(c))
-    dict_of_changes['AUD'].append(AUD(c))
-    dict_of_changes['BTC'].append(BTC(b))
-    dict_of_changes['ETH'].append(ETH(c)[0])
+    dict_of_changes['USD'].append(currency_difference_USD(c))
+    dict_of_changes['GBP'].append(currency_difference_GBP(c))
+    dict_of_changes['EUR'].append(currency_difference_EUR(c))
+    dict_of_changes['TRY'].append(currency_difference_TRY(c))
+    dict_of_changes['JPY'].append(currency_difference_JPY(c))
+    dict_of_changes['AUD'].append(currency_difference_AUD(c))
+    dict_of_changes['BTC'].append(currency_difference_BTC(b))
+    dict_of_changes['ETH'].append(currency_difference_ETH(c)[0])
     dict_of_changes['Gold'].append(products.Gold())
     dict_of_changes['OilBrent'].append(products.OilBrent())
     dict_of_changes['OilWTI'].append(products.OilWTI())
     dict_of_changes['Silver'].append(products.Silver())
     dict_of_changes['Platinum'].append(products.Platinum())
     dict_of_changes['Palladium'].append(products.Palladium())
-    # dict_of_changes['Gas'].append(products.Gas())
-    # dict_of_changes['USD'] = list_of_changes_USD
-    # dict_of_changes['GBP'] = list_of_changes_GBP
-    # dict_of_changes['EUR'] = list_of_changes_EUR
-    # dict_of_changes['TRY'] = list_of_changes_TRY
-    # dict_of_changes['JPY'] = list_of_changes_JPY
-    # dict_of_changes['AUD'] = list_of_changes_AUD
-    # dict_of_changes['BTC'] = list_of_changes_BTC
-    # dict_of_changes['ETH'] = list_of_changes_ETH
-    # dict_of_changes['Gold'] = list_of_changes_Gold
-    # dict_of_changes['OilBrent'] = list_of_changes_OilBrent
-    # dict_of_changes['OilWTI'] = list_of_changes_OilWTI
-    # dict_of_changes['Silver'] = list_of_changes_Silver
-    # dict_of_changes['Platinum'] = list_of_changes_Platinum
-    # dict_of_changes['Palladium'] = list_of_changes_Palladium
-    # dict_of_changes['Gas'] = list_of_changes_Gas
+    dict_of_changes['time'].append(current_time)
     print(dict_of_changes)
-    print(list_time)
 
 
-def percentage():
-    if min(list_of_changes_USD) < list_of_changes_USD[0] - (
-            list_of_changes_USD[0] / 100 * int(ui.Enter_percentage.text())):
-        print('yes')
-    else:
-        print('ere')
+
+# def percentage():
+#     if min(list_of_changes_USD) < list_of_changes_USD[0] - (
+#             list_of_changes_USD[0] / 100 * int(ui.Enter_percentage.text())):
+#         print('yes')
+#     else:
+#         print('ere')
 
 
 if __name__ == "__main__":
@@ -380,76 +365,16 @@ if __name__ == "__main__":
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.setWindowTitle('CurrencyC')
+    update()
 
-    # Currency
-    ui.Currency_USD.setText(str(USD(c)) + '  ₽')
-    ui.Currency_GBP.setText(str(GBP(c)) + '  ₽')
-    ui.Currency_EUR.setText(str(EUR(c)) + '  ₽')
-    ui.Currency_TRY.setText(str(TRY(c)) + '  ₽')
-    ui.Currency_JPY.setText(str(JPY(c)) + '  ₽')
-    ui.Currency_AUD.setText(str(AUD(c)) + '  ₽')
-    ui.Currency_BTC.setText(str(BTC(b)) + '  ₽')
-    ui.Currency_ETH.setText(str(ETH(c)[0]) + '  ₽')
-    ui.Course_Gold.setText(str(products.Gold()) + '  ₽')
-    ui.Course_Silver.setText(str(products.Silver()) + '  ₽')
-    ui.Course_Platinum.setText(str(products.Platinum()) + '  ₽')
-    ui.Course_Palladium.setText(str(products.Palladium()) + '  ₽')
-    ui.Course_Brent.setText(str(products.OilBrent()) + '  ₽')
-    ui.Course_WTI.setText(str(products.OilWTI()) + '  ₽')
-    ui.Course_Gas.setText(str(products.Gas()) + '  ₽')
 
-    dict_of_changes['USD'].append(USD(c))
-    dict_of_changes['GBP'].append(GBP(c))
-    dict_of_changes['EUR'].append(EUR(c))
-    dict_of_changes['TRY'].append(TRY(c))
-    dict_of_changes['JPY'].append(JPY(c))
-    dict_of_changes['AUD'].append(AUD(c))
-    dict_of_changes['BTC'].append(BTC(b))
-    dict_of_changes['ETH'].append(ETH(c)[0])
-    dict_of_changes['Gold'].append(products.Gold())
-    dict_of_changes['OilBrent'].append(products.OilBrent())
-    dict_of_changes['OilWTI'].append(products.OilWTI())
-    dict_of_changes['Silver'].append(products.Silver())
-    dict_of_changes['Platinum'].append(products.Platinum())
-    dict_of_changes['Palladium'].append(products.Palladium())
-    dict_of_changes['Gas'].append(products.Gas())
+    ui.Convert_Button.clicked.connect(convent_currency)
 
-    list_time.append(current_time)
 
-    # dict_of_changes['USD'] = list_of_changes_USD
-    # dict_of_changes['GBP'] = list_of_changes_GBP
-    # dict_of_changes['EUR'] = list_of_changes_EUR
-    # dict_of_changes['TRY'] = list_of_changes_TRY
-    # dict_of_changes['JPY'] = list_of_changes_JPY
-    # dict_of_changes['AUD'] = list_of_changes_AUD
-    # dict_of_changes['BTC'] = list_of_changes_BTC
-    # dict_of_changes['ETH'] = list_of_changes_ETH
-    # dict_of_changes['Gold'] = list_of_changes_Gold
-    # dict_of_changes['OilBrent'] = list_of_changes_OilBrent
-    # dict_of_changes['OilWTI'] = list_of_changes_OilWTI
-    # dict_of_changes['Silver'] = list_of_changes_Silver
-    # dict_of_changes['Platinum'] = list_of_changes_Platinum
-    # dict_of_changes['Palladium'] = list_of_changes_Palladium
-    # dict_of_changes['Gas'] = list_of_changes_Gas
-    print(dict_of_changes)
-    print(list_time)
-
-    # Products
-
-    # Stocks
-
-    # Converter
-
-    ui.Convert_Button.clicked.connect(Convent_currency)
-
-    # Percentage
-    # ui.Button_percentage.clicked.connect()
-
-    # update
     timer = QtCore.QTimer()
     timer.timeout.connect(update)
-    timer.start(60000)  # 60000
+    timer.start(60000)
 
-    # Show
+
     MainWindow.show()
     sys.exit(app.exec_())
