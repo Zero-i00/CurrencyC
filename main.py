@@ -18,6 +18,7 @@ import openpyxl
 c = CurrencyRates()
 b = BtcConverter()
 l_time = time.localtime()
+StartTime = time.time()
 current_time = time.strftime('%H:%M', l_time)
 dict_of_changes = {
     'USD': [],
@@ -44,6 +45,7 @@ dict_of_changes = {
     'time': []
 
 }
+list_currency = list(dict_of_changes)
 
 
 
@@ -212,20 +214,32 @@ def weather():
 
 
 def convent_currency():
-    global c
+    global c, b
 
     input_currency = ui.Input_currency.text().upper()  # Из какой
     amount = float(ui.Input_amount.text())  # Сумма
     output_currency = ui.Output_currency.text().upper()  # В какую
-    if output_currency == 'BTC':
-        output_amount = round(b.convert_to_btc(amount, input_currency), 2)  # Получу
+    if input_currency == 'BTC' and output_currency == 'ETH':
+        output_amount = round((currency_difference_BTC(b) * amount) / float(currency_difference_ETH(c)[1]), 3)
+        ui.Output_amount.setText(str(output_amount))
+    elif input_currency == 'ETH' and output_currency == 'BTC':
+        output_amount = round((float(currency_difference_ETH(c)[1]) * amount) / currency_difference_BTC(b), 5)
+        ui.Output_amount.setText(str(output_amount))
+    elif output_currency == 'BTC':
+        output_amount = round(b.convert_to_btc(amount, input_currency), 2)
+        ui.Output_amount.setText(str(output_amount))
+    elif input_currency == 'BTC' and output_currency == 'BTC':
+        output_amount = amount * 1
+        ui.Output_amount.setText(str(output_amount))
+    elif input_currency == 'ETH' and output_currency == 'ETH':
+        output_amount = amount * 1
         ui.Output_amount.setText(str(output_amount))
     elif input_currency == 'BTC':
         output_amount = round(b.convert_btc_to_cur(amount, output_currency), 2)
         ui.Output_amount.setText(str(output_amount))
     elif input_currency == 'ETH':
         convert = c.get_rate('USD', output_currency)
-        output_amount = round(float(currency_difference_ETH(c)[1]) * float(amount) * float(convert), 2)
+        output_amount = round(float(currency_difference_ETH(c)[1]) * amount * float(convert), 2)
         ui.Output_amount.setText(str(output_amount))
     elif output_currency == 'ETH':
         convert = c.get_rate(input_currency, 'USD')
@@ -234,24 +248,23 @@ def convent_currency():
     else:
         convert = c.get_rate(input_currency, output_currency)
         output_amount = round(convert * amount, 2)
-        print()
         ui.Output_amount.setText(str(output_amount))
 
 
 def email():
     server = 'smtp.gmail.com'
-    user = 'currencycgraduation@gmail.com'  # Email нашей программы
-    password = 'CyCGn1605'  # Пороль
+    user = 'currencycgraduation@gmail.com'
+    password = 'CyCGn1605'
 
-    recipients = ['user@gmail.com']  # Сюда надо получателя вписывать
+    recipients = [ui.Enter_email.text()]
     sender = 'currencycgraduation@gmail.com'
-    subject = 'CurrencyC'
-    text = '<b>Тестовое сообщение</b>'  # Само сообщение
+    subject = 'Срочно продавайте валюты!'
+    text = '<b>Тестовое сообщение</b>'
     html = '<html><head></head><body><p>' + text + '</p></body></html>'
 
     msg = MIMEMultipart('alternative')
     msg['Subject'] = subject
-    msg['From'] = 'Python script <' + sender + '>'
+    msg['From'] = 'CurrencyC <' + sender + '>'
     msg['To'] = ', '.join(recipients)
     msg['Reply-To'] = sender
     msg['Return-Path'] = sender
@@ -271,35 +284,49 @@ def email():
 
 def excel():
     book = openpyxl.Workbook()
-    time = [12, 13, 14, 15]
-    Currency = ['USD', 'EUR', "GBP", '']
-    USD = [77, 78, 79, 76]
-    EUR = [90, 91, 92, 93]
+
+    items_time = dict_of_changes[list_currency[len(list_currency)-1]]
+
+    sheet = book.active
 
     count = 0
     count_number = 2
-    count_res_time = 0
+    while count != len(list_currency) - 1:
+        sheet['A{0}'.format(count_number)] = list_currency[count]
+
+        count_number+=1
+        count+=1
+
+    count_time = 0
     count_column = 2
-    count_res_Currency = 0
-    sheet = book.active
+    while count_time != len(items_time):
+        sheet.cell(row=1,column=count_column).value = items_time[count_time]
 
-    while count != len(USD):
-        sheet['A{0}'.format(count_number)] = Currency[count_res_Currency]
-        sheet.cell(row=1, column=count_column).value = time[count_res_time]
-        sheet.cell(row=2, column=count_column).value = USD[count]
-        sheet.cell(row=3, column=count_column).value = EUR[count]
-        count_number += 1
-        count_column += 1
-        count_res_time += 1
-        count_res_Currency += 1
-        if count_res_Currency >= len(USD) - 1:
-            count_res_Currency = 3
-        count += 1
+        count_column+=1
+        count_time+=1
 
-    else:
-        book.save('test.xlsx')
-        book.close()
 
+    count_value = 0
+    count_row = 2
+    count_column_value = 2
+    indications_value = dict_of_changes[list_currency[count_value]]
+    count_indications_value = 0
+    while count_value != len(list_currency)-1:
+        if count_indications_value == len(indications_value):
+            count_row+=1
+            count_column_value = 2
+            count_indications_value = 0
+            count_value+=1
+
+        indications_value = dict_of_changes[list_currency[count_value]]
+        sheet.cell(row=count_row, column=count_column_value).value = indications_value[count_indications_value]
+        count_column_value+=1
+        count_indications_value+=1
+
+    sheet['A1'].value = 'Значения/Время'
+    sheet['B23'].value = ''
+    book.save('Currency changes.xlsx')
+    book.close()
 
 def update():
     global c, b, l_time, current_time
@@ -345,17 +372,71 @@ def update():
     dict_of_changes['Silver'].append(products.Silver())
     dict_of_changes['Platinum'].append(products.Platinum())
     dict_of_changes['Palladium'].append(products.Palladium())
+    dict_of_changes['Gas'].append(products.Gas())
+    dict_of_changes['Sberbank'].append(stocks.Sberbank())
+    dict_of_changes['Gazprom'].append(stocks.Gazprom())
+    dict_of_changes['Lukoil'].append(stocks.Lukoil())
+    dict_of_changes['Yandex'].append(stocks.Yandex())
+    dict_of_changes['Tesla'].append(stocks.Tesla())
+    dict_of_changes['Apple'].append(stocks.Apple())
     dict_of_changes['time'].append(current_time)
-    print(dict_of_changes)
+    # print(dict_of_changes)
+    # if len(dict_of_changes[list_currency[0]]) >= 2:
+    #     percentage()
 
 
 
-# def percentage():
-#     if min(list_of_changes_USD) < list_of_changes_USD[0] - (
-#             list_of_changes_USD[0] / 100 * int(ui.Enter_percentage.text())):
-#         print('yes')
-#     else:
-#         print('ere')
+
+def countdown():
+    global StartTime
+    time_countdown = int(time.time() - StartTime)
+
+    minutes = (time_countdown % 3500) // 60
+    seconds = time_countdown % 60
+
+
+    if minutes == 1:
+        StartTime = time.time()
+        time_countdown = int(time.time() - StartTime)
+        minutes = (time_countdown % 3500) // 60
+        seconds = time_countdown % 60
+        minutes = str(minutes); seconds = str(seconds)
+        time_string = '{0}:{1}'.format('0' * (2 - len(minutes)) + minutes, '0' * (2 - len(seconds)) + seconds)
+    else:
+        minutes = str(minutes); seconds = str(seconds)
+        time_string = '{0}:{1}'.format('0' * (2 - len(minutes)) + minutes, '0' * (2 - len(seconds)) + seconds)
+
+    ui.Output_amount.setText(time_string)
+
+
+
+
+def percentage():
+
+    count_percentage = 0
+    percentage_indications = dict_of_changes[list_currency[count_percentage]]
+    count_indications_percentage = 0
+
+    while count_percentage != len(list_currency)-2:
+
+        if count_indications_percentage == len(percentage_indications):
+            count_indications_percentage = 0
+            count_percentage+=1
+
+        percentage_indications = dict_of_changes[list_currency[count_percentage]]
+        one_element_percentage_indications = percentage_indications[0]
+        if (one_element_percentage_indications - one_element_percentage_indications / 100 * float(1)) > min(percentage_indications):
+            count_indications_percentage = 0
+            count_percentage += 1
+            print('y', '--', list_currency[count_percentage], '--', percentage_indications)
+        else:
+            print('n', '--', list_currency[count_percentage], '--', percentage_indications)
+        count_indications_percentage+=1
+    print('------------------------------------------------------')
+
+
+
+
 
 
 if __name__ == "__main__":
@@ -368,12 +449,20 @@ if __name__ == "__main__":
     update()
 
 
-    ui.Convert_Button.clicked.connect(convent_currency)
+
+    ui.Convert_Button.clicked.connect( convent_currency )
+    ui.Button_Excel.clicked.connect( excel )
+    # ui.Button_percentage.clicked.connect( percentage )
+
+    # timer_countdown = QtCore.QTimer()
+    # timer_countdown.timeout.connect(countdown)
+    # timer_countdown.start(1000)
 
 
     timer = QtCore.QTimer()
     timer.timeout.connect(update)
-    timer.start(60000)
+    # timer.timeout.connect(percentage)
+    timer.start(55000)
 
 
     MainWindow.show()
