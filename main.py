@@ -1,7 +1,12 @@
+import platform
+import PyQt5
+import forex_python.converter
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
-from style_venv_for_currency_liver import Ui_MainWindow
+from PySide2 import QtCore, QtGui, QtWidgets
+from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent)
+from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
+from PySide2.QtWidgets import *
 import sys, time, json, lxml
 from forex_python.converter import CurrencyRates, CurrencyCodes
 from forex_python.bitcoin import BtcConverter
@@ -15,271 +20,54 @@ from email.mime.text import MIMEText
 from platform import python_version
 import openpyxl
 
+from ui_functions import *
+from Currencies import *
+from ui_weather import *
+from ui_splash_screen import Ui_SplashScreen
+from ui_main import Ui_MainWindow
+
+
+counter = 0
+jumper = 10
 c = CurrencyRates()
 b = BtcConverter()
 l_time = time.localtime()
 StartTime = time.time()
 current_time = time.strftime('%H:%M', l_time)
 dict_of_changes = {
-    'USD': [],
-    'GBP': [],
-    'EUR': [],
-    'TRY': [],
-    'JPY': [],
-    'AUD': [],
-    'BTC': [],
-    'ETH': [],
-    'OilBrent': [],
-    'OilWTI': [],
-    'Gold': [],
-    'Silver': [],
-    'Platinum': [],
-    'Palladium': [],
-    'Gas': [],
-    'Sberbank': [],
-    'Gazprom': [],
-    'Lukoil': [],
-    'Yandex': [],
-    'Tesla': [],
-    'Apple': [],
+    'usd': [],
+    'gbp': [],
+    'eur': [],
+    'try': [],
+    'jpy': [],
+    'aud': [],
+    'btc': [],
+    'eth': [],
+    'oilbrent': [],
+    'oilwti': [],
+    'gold': [],
+    'silver': [],
+    'platinum': [],
+    'palladium': [],
+    'gas': [],
+    'sberbank': [],
+    'gazprom': [],
+    'lukoil': [],
+    'yandex': [],
+    'tesla': [],
+    'apple': [],
     'time': []
 
 }
 list_currency = list(dict_of_changes)
+timer_up = PyQt5.QtCore.QTimer()
+timer_countdown = PyQt5.QtCore.QTimer()
+timer_time_now = PyQt5.QtCore.QTimer()
 
 
 
 
-def currency_difference_USD(c):
-    value = c.get_rate('USD', 'RUB')
-    value = round(value, 2)
-    return value
 
-
-def currency_difference_GBP(c):
-    value = c.get_rate('GBP', 'RUB')
-    value = round(value, 2)
-    return value
-
-
-def currency_difference_EUR(c):
-    value = c.get_rate('EUR', 'RUB')
-    value = round(value, 2)
-    return value
-
-
-def currency_difference_TRY(c):
-    value = c.get_rate('TRY', 'RUB')
-    value = round(value, 2)
-    return value
-
-
-def currency_difference_JPY(c):
-    value = c.get_rate('JPY', 'RUB')
-    value = round(value, 2)
-    return value
-
-
-def currency_difference_AUD(c):
-    value = c.get_rate('AUD', 'RUB')
-    value = round(value, 2)
-    return value
-
-
-def currency_difference_BTC(b):
-    value = b.get_latest_price('RUB')
-    value = round(value, 2)
-    return value
-
-
-def currency_difference_ETH(c):
-    url = 'https://ru.investing.com/crypto/ethereum/chart'
-
-    HEADERS = {
-        'accept': 'q=0.8',
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.128 Safari/537.36',
-    }
-    req = requests.get(url, headers=HEADERS)
-    soup = BeautifulSoup(req.text, "lxml")
-    price_ETH_to_USD = soup.find('span', {'class': 'inlineblock', 'dir': 'ltr'}, ).find('span', {
-        'id': 'last_last'}).text.replace('.', '').replace(',', '.')
-    value_RUB = c.get_rate('USD', 'RUB')
-    price_ETH_to_RUB = round(float(price_ETH_to_USD) * value_RUB, 2)
-
-    return [price_ETH_to_RUB, price_ETH_to_USD]
-
-
-class Products:
-    def __init__(self):
-        self.url = 'https://ru.investing.com/news/forex-news'
-        self.HEADERS = {
-            'accept': '*/*',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.128 Safari/537.36'
-        }
-
-        self.req = requests.get(self.url, headers=self.HEADERS)
-        self.soup = BeautifulSoup(self.req.text, 'lxml')
-
-    def OilBrent(self):
-        price_Brent = self.soup.find('td', {'id': 'sb_last_8833'}).text.replace('.', '').replace(',', '.')
-        price_Brent = round(float(price_Brent), 2)
-        return price_Brent
-
-    def OilWTI(self):
-        price_WTI = self.soup.find('td', {'id': 'sb_last_8849'}).text.replace('.', '').replace(',', '.')
-        price_WTI = round(float(price_WTI), 2)
-        return price_WTI
-
-    def Gold(self):
-        price_Gold = self.soup.find('td', {'id': 'sb_last_8830'}).text.replace('.', '').replace(',', '.')
-        price_Gold = round(float(price_Gold), 2)
-        return price_Gold
-
-    def Silver(self):
-        price_Silver = self.soup.find('td', {'id': 'sb_last_8836'}).text.replace('.', '').replace(',', '.')
-        price_Silver = round(float(price_Silver), 2)
-        return price_Silver
-
-    def Platinum(self):
-        price_Platinum = self.soup.find('td', {'id': 'sb_last_8910'}).text.replace('.', '').replace(',', '.')
-        price_Platinum = round(float(price_Platinum), 2)
-        return price_Platinum
-
-    def Palladium(self):
-        price_Palladium = self.soup.find('td', {'id': 'sb_last_8883'}).text.replace('.', '').replace(',', '.')
-        price_Palladium = round(float(price_Palladium), 2)
-        return price_Palladium
-
-    def Gas(self):
-        price_Gas = self.soup.find('td', {'id': 'sb_last_8862'}).text.replace('.', '').replace(',', '.')
-        price_Gas = round(float(price_Gas), 2)
-        return price_Gas
-
-
-class Stocks:
-    def __init__(self):
-        self.url = 'https://ru.investing.com/news/forex-news'
-        self.HEADERS = {
-            'Accept': '*/*',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.128 Safari/537.36'
-        }
-        self.req = requests.get(self.url, headers=self.HEADERS)
-        self.soup = BeautifulSoup(self.req.text, 'lxml')
-
-    def Sberbank(self):
-        stocks_Sberbank = self.soup.find('td', {'id': 'sb_last_39214'}).text.replace('.', '').replace(',', '.')
-        stocks_Sberbank = round(float(stocks_Sberbank), 2)
-        return stocks_Sberbank
-
-    def Gazprom(self):
-        stocks_Gazprom = self.soup.find('td', {'id': 'sb_last_13684'}).text.replace('.', '').replace(',', '.')
-        stocks_Gazprom = round(float(stocks_Gazprom), 2)
-        return stocks_Gazprom
-
-    def Lukoil(self):
-        stocks_Lukoil = self.soup.find('td', {'id': 'sb_last_13689'}).text.replace('.', '').replace(',', '.')
-        stocks_Lukoil = round(float(stocks_Lukoil), 2)
-        return stocks_Lukoil
-
-    def Yandex(self):
-        stocks_Yandex = self.soup.find('td', {'id': 'sb_last_102063'}).text.replace('.', '').replace(',', '.')
-        stocks_Yandex = round(float(stocks_Yandex), 2)
-        return stocks_Yandex
-
-    def Tesla(self):
-        stocks_Tesla = self.soup.find('td', {'id': 'sb_last_13994'}).text.replace('.', '').replace(',', '.')
-        stocks_Tesla = round(float(stocks_Tesla), 2)
-        return stocks_Tesla
-
-    def Apple(self):
-        stocks_Apple = self.soup.find('td', {'id': 'sb_last_6408'}).text.replace('.', '').replace(',', '.')
-        stocks_Apple = round(float(stocks_Apple), 2)
-        return stocks_Apple
-
-
-products = Products()
-stocks = Stocks()
-
-
-def weather():
-    owm = OWM('f53ec5e445bf9fde80baa7338611fe61')
-    city = input('city')
-    mgr = owm.weather_manager()
-    observation = mgr.weather_at_place(city)
-    w = observation.weather
-    temperature_celsius = w.temperature('celsius')
-    temperature_fahrenheit = w.temperature('fahrenheit')
-
-    return temperature_celsius, temperature_fahrenheit
-
-
-def convent_currency():
-    global c, b
-
-    input_currency = ui.Input_currency.text().upper()  # Из какой
-    amount = float(ui.Input_amount.text())  # Сумма
-    output_currency = ui.Output_currency.text().upper()  # В какую
-    if input_currency == 'BTC' and output_currency == 'ETH':
-        output_amount = round((currency_difference_BTC(b) * amount) / float(currency_difference_ETH(c)[1]), 3)
-        ui.Output_amount.setText(str(output_amount))
-    elif input_currency == 'ETH' and output_currency == 'BTC':
-        output_amount = round((float(currency_difference_ETH(c)[1]) * amount) / currency_difference_BTC(b), 5)
-        ui.Output_amount.setText(str(output_amount))
-    elif output_currency == 'BTC':
-        output_amount = round(b.convert_to_btc(amount, input_currency), 2)
-        ui.Output_amount.setText(str(output_amount))
-    elif input_currency == 'BTC' and output_currency == 'BTC':
-        output_amount = amount * 1
-        ui.Output_amount.setText(str(output_amount))
-    elif input_currency == 'ETH' and output_currency == 'ETH':
-        output_amount = amount * 1
-        ui.Output_amount.setText(str(output_amount))
-    elif input_currency == 'BTC':
-        output_amount = round(b.convert_btc_to_cur(amount, output_currency), 2)
-        ui.Output_amount.setText(str(output_amount))
-    elif input_currency == 'ETH':
-        convert = c.get_rate('USD', output_currency)
-        output_amount = round(float(currency_difference_ETH(c)[1]) * amount * float(convert), 2)
-        ui.Output_amount.setText(str(output_amount))
-    elif output_currency == 'ETH':
-        convert = c.get_rate(input_currency, 'USD')
-        output_amount = round(float(currency_difference_ETH(c)[1]) / (float(convert) * float(amount)), 2)
-        ui.Output_amount.setText(str(output_amount))
-    else:
-        convert = c.get_rate(input_currency, output_currency)
-        output_amount = round(convert * amount, 2)
-        ui.Output_amount.setText(str(output_amount))
-
-
-def email():
-    server = 'smtp.gmail.com'
-    user = 'currencycgraduation@gmail.com'
-    password = 'CyCGn1605'
-
-    recipients = [ui.Enter_email.text()]
-    sender = 'currencycgraduation@gmail.com'
-    subject = 'Срочно продавайте валюты!'
-    text = '<b>Тестовое сообщение</b>'
-    html = '<html><head></head><body><p>' + text + '</p></body></html>'
-
-    msg = MIMEMultipart('alternative')
-    msg['Subject'] = subject
-    msg['From'] = 'CurrencyC <' + sender + '>'
-    msg['To'] = ', '.join(recipients)
-    msg['Reply-To'] = sender
-    msg['Return-Path'] = sender
-    msg['X-Mailer'] = 'Python/' + (python_version())
-
-    part_text = MIMEText(text, 'plain')
-    part_html = MIMEText(html, 'html')
-
-    msg.attach(part_text)
-    msg.attach(part_html)
-
-    mail = smtplib.SMTP_SSL(server)
-    mail.login(user, password)
-    mail.sendmail(sender, recipients, msg.as_string())
-    mail.quit()
 
 
 def excel():
@@ -292,7 +80,7 @@ def excel():
     count = 0
     count_number = 2
     while count != len(list_currency) - 1:
-        sheet['A{0}'.format(count_number)] = list_currency[count]
+        sheet['A{0}'.format(count_number)] = list_currency[count].upper()
 
         count_number+=1
         count+=1
@@ -328,142 +116,416 @@ def excel():
     book.save('Currency changes.xlsx')
     book.close()
 
-def update():
-    global c, b, l_time, current_time
 
-    c = CurrencyRates()
-    b = BtcConverter()
-    l_time = time.localtime()
-    current_time = time.strftime('%H:%M', l_time)
 
-    ui.Currency_USD.setText(str(currency_difference_USD(c)) + '  ₽')
-    ui.Currency_GBP.setText(str(currency_difference_GBP(c)) + '  ₽')
-    ui.Currency_EUR.setText(str(currency_difference_EUR(c)) + '  ₽')
-    ui.Currency_TRY.setText(str(currency_difference_TRY(c)) + '  ₽')
-    ui.Currency_JPY.setText(str(currency_difference_JPY(c)) + '  ₽')
-    ui.Currency_AUD.setText(str(currency_difference_AUD(c)) + '  ₽')
-    ui.Currency_BTC.setText(str(currency_difference_BTC(b)) + '  ₽')
-    ui.Currency_ETH.setText(str(currency_difference_ETH(c)[0]) + '  ₽')
-    ui.Course_Gold.setText(str(products.Gold()) + '  ₽')
-    ui.Course_Silver.setText(str(products.Silver()) + '  ₽')
-    ui.Course_Platinum.setText(str(products.Platinum()) + '  ₽')
-    ui.Course_Palladium.setText(str(products.Palladium()) + '  ₽')
-    ui.Course_Brent.setText(str(products.OilBrent()) + '  ₽')
-    ui.Course_WTI.setText(str(products.OilWTI()) + '  ₽')
-    ui.Course_Gas.setText(str(products.Gas()) + '  ₽')
-    ui.Stocks_Sberbank.setText(str(stocks.Sberbank()) + '  ₽')
-    ui.Stocks_Gazprom.setText(str(stocks.Gazprom()) + '  ₽')
-    ui.Stocks_Lukoil.setText(str(stocks.Lukoil()) + '  ₽')
-    ui.Stocks_Yandex.setText(str(stocks.Yandex()) + '  ₽')
-    ui.Stocks_Tesla.setText(str(stocks.Tesla()) + '  ₽')
-    ui.Stocks_Apple.setText(str(stocks.Apple()) + '  ₽')
+class MainWindow(QMainWindow):
+    def __init__(self):
+        QMainWindow.__init__(self)
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
 
-    dict_of_changes['USD'].append(currency_difference_USD(c))
-    dict_of_changes['GBP'].append(currency_difference_GBP(c))
-    dict_of_changes['EUR'].append(currency_difference_EUR(c))
-    dict_of_changes['TRY'].append(currency_difference_TRY(c))
-    dict_of_changes['JPY'].append(currency_difference_JPY(c))
-    dict_of_changes['AUD'].append(currency_difference_AUD(c))
-    dict_of_changes['BTC'].append(currency_difference_BTC(b))
-    dict_of_changes['ETH'].append(currency_difference_ETH(c)[0])
-    dict_of_changes['Gold'].append(products.Gold())
-    dict_of_changes['OilBrent'].append(products.OilBrent())
-    dict_of_changes['OilWTI'].append(products.OilWTI())
-    dict_of_changes['Silver'].append(products.Silver())
-    dict_of_changes['Platinum'].append(products.Platinum())
-    dict_of_changes['Palladium'].append(products.Palladium())
-    dict_of_changes['Gas'].append(products.Gas())
-    dict_of_changes['Sberbank'].append(stocks.Sberbank())
-    dict_of_changes['Gazprom'].append(stocks.Gazprom())
-    dict_of_changes['Lukoil'].append(stocks.Lukoil())
-    dict_of_changes['Yandex'].append(stocks.Yandex())
-    dict_of_changes['Tesla'].append(stocks.Tesla())
-    dict_of_changes['Apple'].append(stocks.Apple())
-    dict_of_changes['time'].append(current_time)
-    # print(dict_of_changes)
-    # if len(dict_of_changes[list_currency[0]]) >= 2:
-    #     percentage()
+
+        self.url = 'https://ru.investing.com/news/forex-news'
+        self.HEADERS = {
+            'accept': '*/*',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.128 Safari/537.36'
+        }
+
+        self.req = requests.get(self.url, headers=self.HEADERS)
+        self.soup = BeautifulSoup(self.req.text, 'lxml')
+
+        self.ui.Btn_Toggle.clicked.connect(lambda: UIFunctions.toggleMenu(self, 150, True))
+
+        self.ui.btn_Home.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.page_Home))
+        self.ui.btn_Excel.clicked.connect( excel )
+        self.ui.btn_Converter.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.page_Converter))
+
+        self.ui.btn_Information.clicked.connect(lambda: UIFunctions.toggleInformation(self, 300, True))
+
+        self.ui.btn_converter.clicked.connect( self.convent_currency )
+
+        self.ui.btn_weather.clicked.connect(lambda: Waether.weather(self))
+
+        self.ui.btn_get_percent.clicked.connect( self.percentage_difference )
+
+
+        self.update()
 
 
 
-
-def countdown():
-    global StartTime
-    time_countdown = int(time.time() - StartTime)
-
-    minutes = (time_countdown % 3500) // 60
-    seconds = time_countdown % 60
+        timer_countdown.timeout.connect(self.countdown)
+        timer_up.timeout.connect(self.update)
+        timer_time_now.timeout.connect(self.time_now)
 
 
-    if minutes == 1:
-        StartTime = time.time()
+        def setValue(self, slider, labelPercentage, progressBarName, color):
+
+            value = slider.value()
+
+            sliderValue = int(value)
+
+            htmlText = """<p align="center"><span style=" font-size:50pt;">{VALUE}</span><span style=" font-size:40pt; vertical-align:super;">%</span></p>"""
+            labelPercentage.setText(htmlText.replace("{VALUE}", str(sliderValue)))
+
+            self.progressBarValue(sliderValue, progressBarName, color)
+
+    def progressBarValue(self, value, widget, color):
+
+        styleSheet = """
+        QFrame{
+        	border-radius: 110px;
+        	background-color: qconicalgradient(cx:0.5, cy:0.5, angle:90, stop:{STOP_1} rgba(85, 170, 255, 255), stop:{STOP_2} {COLOR});
+        }
+        """
+
+        progress = (100 - value) / 100.0
+
+        # GET NEW VALUES
+        stop_1 = str(progress - 0.001)
+        stop_2 = str(progress)
+
+        if value == 100:
+            stop_1 = "1.000"
+            stop_2 = "1.000"
+
+        newStylesheet = styleSheet.replace("{STOP_1}", stop_1).replace("{STOP_2}", stop_2).replace("{COLOR}", color)
+
+        widget.setStyleSheet(newStylesheet)
+
+    def countdown(self):
+        global StartTime
         time_countdown = int(time.time() - StartTime)
+
         minutes = (time_countdown % 3500) // 60
         seconds = time_countdown % 60
-        minutes = str(minutes); seconds = str(seconds)
-        time_string = '{0}:{1}'.format('0' * (2 - len(minutes)) + minutes, '0' * (2 - len(seconds)) + seconds)
-    else:
-        minutes = str(minutes); seconds = str(seconds)
-        time_string = '{0}:{1}'.format('0' * (2 - len(minutes)) + minutes, '0' * (2 - len(seconds)) + seconds)
 
-    ui.Output_amount.setText(time_string)
-
-
-
-
-def percentage():
-
-    count_percentage = 0
-    percentage_indications = dict_of_changes[list_currency[count_percentage]]
-    count_indications_percentage = 0
-
-    while count_percentage != len(list_currency)-2:
-
-        if count_indications_percentage == len(percentage_indications):
-            count_indications_percentage = 0
-            count_percentage+=1
-
-        percentage_indications = dict_of_changes[list_currency[count_percentage]]
-        one_element_percentage_indications = percentage_indications[0]
-        if (one_element_percentage_indications - one_element_percentage_indications / 100 * float(1)) > min(percentage_indications):
-            count_indications_percentage = 0
-            count_percentage += 1
-            print('y', '--', list_currency[count_percentage], '--', percentage_indications)
+        if minutes == 1:
+            StartTime = time.time()
+            time_countdown = int(time.time() - StartTime)
+            minutes = (time_countdown % 3500) // 60
+            seconds = time_countdown % 60
+            time_string = '0{0}:{1}'.format(minutes, str(59 - seconds))
         else:
-            print('n', '--', list_currency[count_percentage], '--', percentage_indications)
-        count_indications_percentage+=1
-    print('------------------------------------------------------')
+            time_string = '0{0}:{1}'.format(minutes, str(59 - seconds))
+            if seconds >= 50:
+                time_string = '0{0}:0{1}'.format(minutes, str(59 - seconds))
+
+        return self.ui.label_update_inf.setText(time_string)
+
+    def time_now(self):
+
+        time_now = time.localtime()
+        true_time_now = time.strftime('%H:%M', time_now)
+
+        return self.ui.label_time_inf.setText(str(true_time_now))
+
+    def percentage_difference(self):
+        try:
+            self.ui.lineEdit_enter_currency_percent.setStyleSheet("QLineEdit{\n"
+"    border: rgb(120, 230, 130);\n"
+"    background-color: rgb(35, 35, 35);\n"
+"    color: #FFF;\n"
+"}\n"
+"\n"
+"QLineEdit:hover{\n"
+"    border: 2px solid rgb(177, 244, 92);\n"
+"}\n"
+"\n"
+"QLineEdit:focus{\n"
+"    border: 2px solid rgb(177, 244, 92);    \n"
+"    background-color: rgb(55, 55, 55);\n"
+"}\n"
+"\n"
+"\n"
+"")
+            self.ui.label_percent_inf.setStyleSheet("color: #FFF")
+            self.ui.circular_percentProgress.setStyleSheet("QFrame{\n"
+"    border-radius: 80%;\n"
+"    background-color: qconicalgradient(cx:0.5, cy:0.5, angle:90, stop:0.100 rgba(255, 0, 127, 0), stop:0.100 rgba(120, 230, 130, 255));\n"
+"}")
+            self.ui.btn_get_percent.setStyleSheet("QPushButton {\n"
+"    border-radius: 20%;\n"
+"    border: 2px solid rgb(120, 230, 130);\n"
+"    background-color:rgb(44, 44, 44);\n"
+"    color: #FFF\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(55, 55, 55);\n"
+"    border: 2px solid rgb(177, 244, 92);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color:  rgb(177, 244, 92)\n"
+"}\n"
+"\n"
+"\n"
+"")
+            list_of_enter_percent_currency = dict_of_changes[self.ui.lineEdit_enter_currency_percent.text().casefold()]
+            initial_number = float(list_of_enter_percent_currency[0])
+            last_number = float(list_of_enter_percent_currency[len(list_of_enter_percent_currency)-1])
+            if initial_number > last_number:
+                percent = str(round((initial_number - last_number) / last_number * 100, 2))
+                if percent == '0,00' or percent == '0,0':
+                    self.ui.label_percent_inf.setText('STABLE')
+                else:
+                    self.ui.label_percent_inf.setText('-{0}%'.format(percent))
+            elif last_number > initial_number:
+                percent = str(round((initial_number - last_number) / initial_number * 100, 2)).replace('-', '')
+                if percent == '0,00' or percent == '0,0':
+                    self.ui.label_percent_inf.setText('STABLE')
+                else:
+                    self.ui.label_percent_inf.setText('+{0}%'.format(percent))
+            elif initial_number == last_number:
+                self.ui.label_percent_inf.setText('STABLE')
+        except KeyError:
+            self.ui.label_percent_inf.setStyleSheet("color: rgb(215, 50, 75)")
+            self.ui.label_percent_inf.setText('0,00%')
+            self.ui.lineEdit_enter_currency_percent.setPlaceholderText('Invalid data')
+            self.ui.lineEdit_enter_currency_percent.setText('')
+            self.ui.lineEdit_enter_currency_percent.setStyleSheet("QLineEdit{\n"
+"    border: rgb(215, 50, 75);\n"
+"    background-color: rgb(35, 35, 35);\n"
+"    color: rgb(215, 50, 75);\n"
+"}\n"
+"\n"
+"QLineEdit:hover{\n"
+"    border: 2px solid rgb(215, 50, 75);\n"
+"}\n"
+"\n"
+"QLineEdit:focus{\n"
+"    border: 2px solid rgb(215, 50, 75);\n"
+"    background-color: rgb(55, 55, 55);\n"
+"}\n"
+"\n"
+"\n"
+"")
+            self.ui.circular_percentProgress.setStyleSheet("QFrame{\n"
+"    border-radius: 80%;\n"
+"    background-color: qconicalgradient(cx:0.5, cy:0.5, angle:90, stop:0.100 rgba(255, 0, 127, 0), stop:0.100 rgba(215, 50, 75, 255));\n"
+"}")
+            self.ui.btn_get_percent.setStyleSheet("QPushButton {\n"
+"    border-radius: 20%;\n"
+"    border: 2px solid rgb(215, 50, 75);\n"
+"    background-color:rgb(44, 44, 44);\n"
+"    color: rgb(215, 50, 75);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(55, 55, 55);\n"
+"    border: 2px solid rgb(215, 50, 75);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color:  rgb(177, 244, 92)\n"
+"}\n"
+"\n"
+"\n"
+"")
+
+
+    def convent_currency(self):
+        global c, b
+
+        try:
+            self.ui.label_converter_get_it.setStyleSheet("QLabel {\n"
+ "\n"
+ "	border: 2px solid rgb(120, 230, 130);\n"
+ "	border-radius: 20%;\n"
+ "	color: #FFF;\n"
+ "	background-color:rgb(44, 44, 44);\n"
+ "	padding-left: 15px;\n"
+ "}")
+            input_currency = self.ui.lineEdit_from_the_currency.text().upper()  # Из какой
+            amount = float(self.ui.lineEdit_the_amount.text())  # Сумма
+            output_currency = self.ui.lineEdit_to_the_currency.text().upper()  # В какую
+            if input_currency == 'BTC' and output_currency == 'ETH':
+                output_amount = round((Currencies.currency_difference_BTC(self, b) * amount) / float(self.Currencies.currency_difference_ETH(self, c)[1]), 3)
+                self.ui.label_converter_get_it.setText(str(output_amount))
+            elif input_currency == 'ETH' and output_currency == 'BTC':
+                output_amount = round((float(Currencies.currency_difference_ETH(c)[1]) * amount) / self.Currencies.currency_difference_BTC(self, b), 5)
+                self.ui.label_converter_get_it.setText(str(output_amount))
+            elif output_currency == 'BTC':
+                output_amount = round(b.convert_to_btc(amount, input_currency), 2)
+                self.ui.label_converter_get_it.setText(str(output_amount))
+            elif input_currency == output_currency and output_currency == input_currency:
+                output_amount = amount * 1
+                self.ui.label_converter_get_it.setText(str(output_amount))
+            elif input_currency == 'BTC':
+                output_amount = round(b.convert_btc_to_cur(amount, output_currency), 2)
+                self.ui.label_converter_get_it.setText(str(output_amount))
+            elif input_currency == 'ETH':
+                convert = c.get_rate('USD', output_currency)
+                output_amount = round(float(Currencies.currency_difference_ETH(self, c)[1]) * amount * float(convert), 2)
+                self.ui.label_converter_get_it.setText(str(output_amount))
+            elif output_currency == 'ETH':
+                convert = c.get_rate(input_currency, 'USD')
+                output_amount = round(float(Currencies.currency_difference_ETH(self, c)[1]) / (float(convert) * float(amount)), 2)
+                self.ui.label_converter_get_it.setText(str(output_amount))
+            else:
+                convert = c.get_rate(input_currency, output_currency)
+                output_amount = round(convert * amount, 2)
+                self.ui.label_converter_get_it.setText(str(output_amount))
+
+        except ValueError:
+            self.ui.label_converter_get_it.setStyleSheet("QLabel {\n"
+"\n"
+"	border: 2px solid rgb(215, 50, 75);\n"
+"	border-radius: 20%;\n"
+"	color: rgb(215, 50, 75);\n"
+"	background-color:rgb(44, 44, 44);\n"
+"	padding-left: 15px;\n"
+"}")
+            self.ui.label_converter_get_it.setText('The amount must be a digit')
+        except forex_python.converter.RatesNotAvailableError:
+            self.ui.label_converter_get_it.setStyleSheet("QLabel {\n"
+"\n"
+"	border: 2px solid rgb(215, 50, 75);\n"
+"	border-radius: 20%;\n"
+"	color: rgb(215, 50, 75);\n"
+"	background-color:rgb(44, 44, 44);\n"
+"	padding-left: 0px;\n"
+"   font-size: 13px;\n"                                                      
+"}")
+            self.ui.label_converter_get_it.setText('There is no such currency or it is typed incorrectly')
 
 
 
+
+    def update(self):
+        global c, b, l_time, current_time, dict_of_changes, Currencies
+
+        c = CurrencyRates()
+        b = BtcConverter()
+        l_time = time.localtime()
+        current_time = time.strftime('%H:%M', l_time)
+
+        self.ui.C_USD.setText(str(Currencies.currency_difference_USD(self, c)) + '  ₽')
+        self.ui.C_GBP.setText(str(Currencies.currency_difference_GBP(self, c)) + '  ₽')
+        self.ui.C_EUR.setText(str(Currencies.currency_difference_EUR(self, c)) + '  ₽')
+        self.ui.C_TRY.setText(str(Currencies.currency_difference_TRY(self, c)) + '  ₽')
+        self.ui.C_JPY.setText(str(Currencies.currency_difference_JPY(self, c)) + '  ₽')
+        self.ui.C_AUD.setText(str(Currencies.currency_difference_AUD(self, c)) + '  ₽')
+        self.ui.C_BTC.setText(str(Currencies.currency_difference_BTC(self, b)) + '  ₽')
+        self.ui.C_ETH.setText(str(Currencies.currency_difference_ETH(self, c)[0]) + '  ₽')
+        self.ui.C_Gold.setText(str(Currencies.Gold(self)) + '  ₽')
+        self.ui.C_Silver.setText(str(Currencies.Silver(self)) + '  ₽')
+        self.ui.C_Platinum.setText(str(Currencies.Platinum(self)) + '  ₽')
+        self.ui.C_Palladium.setText(str(Currencies.Palladium(self)) + '  ₽')
+        self.ui.C_OilBrent.setText(str(Currencies.OilBrent(self)) + '  ₽')
+        self.ui.C_OilWTI.setText(str(Currencies.OilWTI(self)) + '  ₽')
+        self.ui.C_Gas.setText(str(Currencies.Gas(self)) + '  ₽')
+        self.ui.C_Sberbank.setText(str(Currencies.Sberbank(self)) + '  ₽')
+        self.ui.C_Gazprom.setText(str(Currencies.Gazprom(self)) + '  ₽')
+        self.ui.C_Lukoil.setText(str(Currencies.Lukoil(self)) + '  ₽')
+        self.ui.C_Yandex.setText(str(Currencies.Yandex(self)) + '  ₽')
+        self.ui.C_Tesla.setText(str(Currencies.Tesla(self)) + '  ₽')
+        self.ui.C_Apple.setText(str(Currencies.Apple(self)) + '  ₽')
+
+        dict_of_changes['usd'].append(Currencies.currency_difference_USD(self,c))
+        dict_of_changes['gbp'].append(Currencies.currency_difference_GBP(self,c))
+        dict_of_changes['eur'].append(Currencies.currency_difference_EUR(self,c))
+        dict_of_changes['try'].append(Currencies.currency_difference_TRY(self,c))
+        dict_of_changes['jpy'].append(Currencies.currency_difference_JPY(self,c))
+        dict_of_changes['aud'].append(Currencies.currency_difference_AUD(self,c))
+        dict_of_changes['btc'].append(Currencies.currency_difference_BTC(self,b))
+        dict_of_changes['eth'].append(Currencies.currency_difference_ETH(self,c)[0])
+        dict_of_changes['gold'].append(Currencies.Gold(self))
+        dict_of_changes['oilbrent'].append(Currencies.OilBrent(self))
+        dict_of_changes['oilwti'].append(Currencies.OilWTI(self))
+        dict_of_changes['silver'].append(Currencies.Silver(self))
+        dict_of_changes['platinum'].append(Currencies.Platinum(self))
+        dict_of_changes['palladium'].append(Currencies.Palladium(self))
+        dict_of_changes['gas'].append(Currencies.Gas(self))
+        dict_of_changes['sberbank'].append(Currencies.Sberbank(self))
+        dict_of_changes['gazprom'].append(Currencies.Gazprom(self))
+        dict_of_changes['lukoil'].append(Currencies.Lukoil(self))
+        dict_of_changes['yandex'].append(Currencies.Yandex(self))
+        dict_of_changes['tesla'].append(Currencies.Tesla(self))
+        dict_of_changes['apple'].append(Currencies.Apple(self))
+        dict_of_changes['time'].append(current_time)
+
+
+class SplashScreen(QMainWindow):
+    def __init__(self):
+        QMainWindow.__init__(self)
+        self.ui = Ui_SplashScreen()
+        self.ui.setupUi(self)
+
+        self.progressBarValue(0)
+
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+
+        self.shadow = QGraphicsDropShadowEffect(self)
+        self.shadow.setBlurRadius(20)
+        self.shadow.setXOffset(0)
+        self.shadow.setYOffset(0)
+        self.shadow.setColor(QColor(0, 0, 0, 120))
+        self.ui.circularBg.setGraphicsEffect(self.shadow)
+
+        self.timer = QtCore.QTimer()
+        self.timer.timeout.connect(self.progress)
+
+        self.timer.start(15)
+
+        self.show()
+
+    def progress (self):
+        global counter
+        global jumper
+        value = counter
+
+        htmlText = """<p><span style=" font-size:68pt;">{VALUE}</span><span style=" font-size:58pt; vertical-align:super;">%</span></p>"""
+
+        newHtml = htmlText.replace("{VALUE}", str(jumper))
+
+        if(value > jumper):
+
+            self.ui.labelPercentage.setText(newHtml)
+            jumper += 10
+
+
+        if value >= 100: value = 1.000
+        self.progressBarValue(value)
+
+        if counter > 100:
+
+            self.timer.stop()
+            self.main = MainWindow()
+
+            self.main.show()
+            self.close()
+
+
+        counter += 0.5
+
+    def progressBarValue(self, value):
+
+        styleSheet = """
+        QFrame{
+        	border-radius: 150px;
+        	background-color: qconicalgradient(cx:0.5, cy:0.5, angle:90, stop:{STOP_1} rgba(255, 0, 127, 0), stop:{STOP_2} rgba(120, 230, 130, 255));
+        }
+        """
+
+        progress = (100 - value) / 100.0
+
+        stop_1 = str(progress - 0.001)
+        stop_2 = str(progress)
+
+        newStylesheet = styleSheet.replace("{STOP_1}", stop_1).replace("{STOP_2}", stop_2)
+
+        self.ui.circularProgress.setStyleSheet(newStylesheet)
 
 
 
 if __name__ == "__main__":
-    # Main
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.setWindowTitle('CurrencyC')
-    update()
-
-
-
-    ui.Convert_Button.clicked.connect( convent_currency )
-    ui.Button_Excel.clicked.connect( excel )
-    # ui.Button_percentage.clicked.connect( percentage )
-
-    # timer_countdown = QtCore.QTimer()
-    # timer_countdown.timeout.connect(countdown)
-    # timer_countdown.start(1000)
-
-
-    timer = QtCore.QTimer()
-    timer.timeout.connect(update)
-    # timer.timeout.connect(percentage)
-    timer.start(55000)
-
-
-    MainWindow.show()
+    app = QApplication(sys.argv)
+    window = SplashScreen()
+    timer_up.start(60000)
+    timer_countdown.start(1000)
+    timer_time_now.start(1000)
     sys.exit(app.exec_())
+
+
