@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>682</height>
+    <height>680</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>1000</width>
-    <height>500</height>
+    <height>620</height>
    </size>
   </property>
   <property name="font">
@@ -46,26 +46,29 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QFrame" name="Top_Bar">
+     <widget class="QFrame" name="frame_top_with_Button">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>40</height>
+        <height>16777215</height>
        </size>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color: rgb(35, 35, 35);</string>
       </property>
       <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
+       <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <property name="lineWidth">
-       <number>0</number>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QVBoxLayout" name="verticalLayout_19">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -73,7 +76,7 @@
         <number>0</number>
        </property>
        <property name="topMargin">
-        <number>0</number>
+        <number>5</number>
        </property>
        <property name="rightMargin">
         <number>0</number>
@@ -81,16 +84,19 @@
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <item>
-        <widget class="QFrame" name="frame_toggle">
-         <property name="maximumSize">
+       <item alignment="Qt::AlignRight">
+        <widget class="QFrame" name="frame_btns_top">
+         <property name="minimumSize">
           <size>
-           <width>70</width>
-           <height>40</height>
+           <width>100</width>
+           <height>0</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(120, 230, 130);</string>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -98,10 +104,7 @@
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <property name="lineWidth">
-          <number>0</number>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <layout class="QHBoxLayout" name="horizontalLayout_30">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -115,26 +118,28 @@
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>2</number>
           </property>
           <item>
-           <widget class="QPushButton" name="Btn_Toggle">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+           <widget class="QPushButton" name="Button_minimumsize">
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">QPushButton {
+             <string notr="true">QPushButton{
+	border:none;
+	border-radius:10px;
+}
 
-	color: rgb(120, 230, 130);
-	border: 0px solid;
+QPushButton:hover{
+	background-color: rgb(45, 45, 45);
 }
 
 QPushButton:pressed{
-	
-	background-color:  rgb(177, 244, 92);
+	background-color: rgb(70, 70, 70);
 }</string>
             </property>
             <property name="text">
@@ -142,36 +147,91 @@ QPushButton:pressed{
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>icons/toggle.png</normaloff>icons/toggle.png</iconset>
+              <normaloff>icons/minimumWin.png</normaloff>icons/minimumWin.png</iconset>
             </property>
             <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Button_oversize">
+            <property name="maximumSize">
              <size>
               <width>30</width>
               <height>30</height>
              </size>
             </property>
-            <property name="autoRepeatDelay">
-             <number>298</number>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+	border:none;
+	border-radius:10px;
+}
+
+QPushButton:hover{
+	background-color: rgb(45, 45, 45);
+}
+
+QPushButton:pressed{
+	background-color: rgb(70, 70, 70);
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icons/maxWin.png</normaloff>icons/maxWin.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>15</width>
+              <height>15</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Button_exit">
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+	border:none;
+	border-radius:10px;
+}
+
+QPushButton:hover{
+	background-color: rgb(45, 45, 45);
+}
+
+QPushButton:pressed{
+	background-color: rgb(70, 70, 70);
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icons/exit.png</normaloff>icons/exit.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
             </property>
            </widget>
           </item>
          </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QFrame" name="frame_top">
-         <property name="styleSheet">
-          <string notr="true">border: none;</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <property name="lineWidth">
-          <number>0</number>
-         </property>
         </widget>
        </item>
       </layout>
@@ -179,6 +239,12 @@ QPushButton:pressed{
     </item>
     <item>
      <widget class="QFrame" name="Content">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
+       </size>
+      </property>
       <property name="styleSheet">
        <string notr="true">border: none;</string>
       </property>
@@ -212,12 +278,12 @@ QPushButton:pressed{
          <property name="minimumSize">
           <size>
            <width>70</width>
-           <height>0</height>
+           <height>300</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>70</width>
+           <width>0</width>
            <height>16777215</height>
           </size>
          </property>
@@ -250,6 +316,59 @@ border: none;</string>
           <property name="bottomMargin">
            <number>0</number>
           </property>
+          <item>
+           <widget class="QPushButton" name="Btn_Toggle">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	color: rgb(255, 255, 255);
+	background-color: rgb(35, 35, 35);
+	border: 0px solid;
+}
+QPushButton:hover {
+	background-color: rgb(120, 230, 130);
+}
+QPushButton:pressed{
+	background-color:  rgb(177, 244, 92)
+}
+
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icons/toggle.png</normaloff>icons/toggle.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="autoRepeatDelay">
+             <number>298</number>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QPushButton" name="btn_Home">
             <property name="minimumSize">
@@ -311,6 +430,44 @@ QPushButton:pressed{
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="btn_Excel">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	color: rgb(255, 255, 255);
+	background-color: rgb(35, 35, 35);
+	border: 0px solid;
+	padding-left: 54;	
+}
+QPushButton:hover {
+	background-color: rgb(120, 230, 130);
+}
+QPushButton:pressed{
+	background-color:  rgb(177, 244, 92)
+}
+</string>
+            </property>
+            <property name="text">
+             <string>         Excel</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icons/excel.png</normaloff>icons/excel.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>50</width>
+              <height>25</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="btn_Converter">
             <property name="minimumSize">
              <size>
@@ -349,44 +506,445 @@ QPushButton:pressed{
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="btn_Excel">
+           <widget class="QFrame" name="frame_Converter">
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>40</height>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>0</width>
+              <height>300</height>
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">QPushButton {
-	color: rgb(255, 255, 255);
-	background-color: rgb(35, 35, 35);
-	border: 0px solid;
-	padding-left: 54;	
+             <string notr="true"/>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_8">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QFrame" name="frame_converter_left_inf_2">
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_42">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QFrame" name="frame_converter_inf_3">
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_27">
+                   <item>
+                    <widget class="QFrame" name="frame_currency_discription">
+                     <property name="maximumSize">
+                      <size>
+                       <width>100</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="frameShape">
+                      <enum>QFrame::NoFrame</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <layout class="QVBoxLayout" name="verticalLayout_10">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QLabel" name="label_from_the_currency_text">
+                        <property name="font">
+                         <font>
+                          <family>Segoe UI</family>
+                          <pointsize>9</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color:rgb(69, 69, 69)</string>
+                        </property>
+                        <property name="text">
+                         <string>From the currency</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="label_the_amount_text">
+                        <property name="font">
+                         <font>
+                          <family>Segoe UI</family>
+                          <pointsize>9</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(70, 70, 70);</string>
+                        </property>
+                        <property name="text">
+                         <string>The amount</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="label_to_the_currency_text">
+                        <property name="font">
+                         <font>
+                          <family>Segoe UI</family>
+                          <pointsize>9</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(70, 70, 70);</string>
+                        </property>
+                        <property name="text">
+                         <string>To the currency</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                   <item alignment="Qt::AlignRight">
+                    <widget class="QFrame" name="frame_currency_values">
+                     <property name="maximumSize">
+                      <size>
+                       <width>85</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="frameShape">
+                      <enum>QFrame::NoFrame</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <layout class="QVBoxLayout" name="verticalLayout_9">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QLineEdit" name="lineEdit_from_the_currency_3">
+                        <property name="maximumSize">
+                         <size>
+                          <width>80</width>
+                          <height>50</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Segoe UI</family>
+                          <pointsize>15</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">QLineEdit {
+	border: 2px solid rgb(120, 230, 130);
+	border-radius: 15px;
+	color: #FFF;
+	background-color:rgb(44, 44, 44);
 }
+QLineEdit:hover {
+	border: 2px solid rgb(177, 244, 92);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(177, 244, 92);
+	background-color:rgb(68, 68, 68);
+}
+
+
+</string>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                        <property name="placeholderText">
+                         <string/>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLineEdit" name="lineEdit_the_amount_3">
+                        <property name="maximumSize">
+                         <size>
+                          <width>80</width>
+                          <height>50</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Segoe UI</family>
+                          <pointsize>15</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">QLineEdit {
+	border: 2px solid rgb(120, 230, 130);
+	border-radius: 15px;
+	color: #FFF;
+	background-color:rgb(44, 44, 44);
+}
+QLineEdit:hover {
+	border: 2px solid rgb(177, 244, 92);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(177, 244, 92);
+	background-color:rgb(68, 68, 68);
+}
+
+
+</string>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                        <property name="placeholderText">
+                         <string/>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLineEdit" name="lineEdit_to_the_currency_3">
+                        <property name="maximumSize">
+                         <size>
+                          <width>80</width>
+                          <height>50</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Segoe UI</family>
+                          <pointsize>15</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">QLineEdit {
+	border: 2px solid rgb(120, 230, 130);
+	border-radius: 15px;
+	color: #FFF;
+	background-color:rgb(44, 44, 44);
+}
+QLineEdit:hover {
+	border: 2px solid rgb(177, 244, 92);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(177, 244, 92);
+	background-color:rgb(68, 68, 68);
+}
+
+
+</string>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                        <property name="placeholderText">
+                         <string/>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="frame_converter_button_3">
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>92</height>
+                   </size>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <layout class="QVBoxLayout" name="verticalLayout_43">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>20</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>9</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="label_converter_get_it_3">
+                     <property name="maximumSize">
+                      <size>
+                       <width>220</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Segoe UI</family>
+                       <pointsize>15</pointsize>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">QLabel {
+	border: 2px solid rgb(120, 230, 130);
+	border-radius: 15px;
+	color: #FFF;
+	background-color:rgb(44, 44, 44);
+}
+QLabel:hover {
+	border: 2px solid rgb(177, 244, 92);
+}
+QLabel:focus {
+	border: 2px solid rgb(177, 244, 92);
+	background-color:rgb(68, 68, 68);
+}
+
+
+</string>
+                     </property>
+                     <property name="text">
+                      <string>I'll get it</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="btn_converter_get">
+                     <property name="minimumSize">
+                      <size>
+                       <width>200</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>220</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Segoe UI</family>
+                       <pointsize>20</pointsize>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">QPushButton {
+	border-radius: 15px;
+	border: 2px solid rgb(120, 230, 130);
+	background-color:rgb(44, 44, 44);
+	color: #FFF
+}
+
 QPushButton:hover {
+	border: 2px solid rgb(177, 244, 92);
+}
+
+QPushButton:pressed {
 	background-color: rgb(120, 230, 130);
 }
-QPushButton:pressed{
-	background-color:  rgb(177, 244, 92)
-}
 </string>
-            </property>
-            <property name="text">
-             <string>         Excel</string>
-            </property>
-            <property name="icon">
-             <iconset>
-              <normaloff>icons/excel.png</normaloff>icons/excel.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>50</width>
-              <height>25</height>
-             </size>
-            </property>
+                     </property>
+                     <property name="text">
+                      <string>Get</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
-          <item alignment="Qt::AlignBottom">
+          <item>
            <widget class="QFrame" name="frame_top_menus">
             <property name="minimumSize">
              <size>
@@ -929,6 +1487,9 @@ border-radius: 30px;</string>
                                        <font>
                                         <family>Nirmala UI</family>
                                         <pointsize>20</pointsize>
+                                        <weight>50</weight>
+                                        <italic>false</italic>
+                                        <bold>false</bold>
                                        </font>
                                       </property>
                                       <property name="styleSheet">
@@ -1444,6 +2005,9 @@ border-radius: 30px;</string>
                                        <font>
                                         <family>Nirmala UI</family>
                                         <pointsize>20</pointsize>
+                                        <weight>50</weight>
+                                        <italic>false</italic>
+                                        <bold>false</bold>
                                        </font>
                                       </property>
                                       <property name="styleSheet">
@@ -1905,6 +2469,9 @@ border-radius: 30px;</string>
                                        <font>
                                         <family>Nirmala UI</family>
                                         <pointsize>20</pointsize>
+                                        <weight>50</weight>
+                                        <italic>false</italic>
+                                        <bold>false</bold>
                                        </font>
                                       </property>
                                       <property name="styleSheet">
@@ -3005,401 +3572,6 @@ QPushButton:pressed {
                   </widget>
                  </item>
                 </layout>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="page_Converter">
-             <layout class="QVBoxLayout" name="verticalLayout_9">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QFrame" name="frame_main_converter">
-                <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <layout class="QHBoxLayout" name="horizontalLayout_30">
-                 <property name="spacing">
-                  <number>0</number>
-                 </property>
-                 <property name="leftMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="QFrame" name="frame_converter_left">
-                   <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_28">
-                    <item>
-                     <widget class="QGroupBox" name="groupBox_converter">
-                      <property name="maximumSize">
-                       <size>
-                        <width>600</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <family>Segoe UI</family>
-                        <pointsize>20</pointsize>
-                       </font>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QGroupBox {
-	border-radius: 30px;
-	color: rgb(120, 230, 130);
-	border: 2px solid rgb(120, 230, 130);
-}
-</string>
-                      </property>
-                      <property name="title">
-                       <string>Converter</string>
-                      </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_31">
-                       <property name="spacing">
-                        <number>6</number>
-                       </property>
-                       <property name="leftMargin">
-                        <number>9</number>
-                       </property>
-                       <property name="topMargin">
-                        <number>40</number>
-                       </property>
-                       <property name="rightMargin">
-                        <number>9</number>
-                       </property>
-                       <property name="bottomMargin">
-                        <number>9</number>
-                       </property>
-                       <item>
-                        <widget class="QFrame" name="frame_converter_left_inf">
-                         <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
-                         </property>
-                         <layout class="QVBoxLayout" name="verticalLayout_29">
-                          <item>
-                           <widget class="QFrame" name="frame_converter_inf">
-                            <property name="frameShape">
-                             <enum>QFrame::StyledPanel</enum>
-                            </property>
-                            <property name="frameShadow">
-                             <enum>QFrame::Raised</enum>
-                            </property>
-                            <layout class="QVBoxLayout" name="verticalLayout_30">
-                             <item>
-                              <widget class="QLineEdit" name="lineEdit_from_the_currency">
-                               <property name="maximumSize">
-                                <size>
-                                 <width>300</width>
-                                 <height>60</height>
-                                </size>
-                               </property>
-                               <property name="font">
-                                <font>
-                                 <family>Segoe UI</family>
-                                 <pointsize>15</pointsize>
-                                </font>
-                               </property>
-                               <property name="styleSheet">
-                                <string notr="true">QLineEdit {
-	border: 2px solid rgb(120, 230, 130);
-	border-radius: 20%;
-	color: #FFF;
-	background-color:rgb(44, 44, 44);
-	padding-left: 15px;
-}
-QLineEdit:hover {
-	border: 2px solid rgb(177, 244, 92);
-}
-QLineEdit:focus {
-	border: 2px solid rgb(177, 244, 92);
-	background-color:rgb(68, 68, 68);
-}
-
-
-</string>
-                               </property>
-                               <property name="text">
-                                <string/>
-                               </property>
-                               <property name="placeholderText">
-                                <string>From The currency</string>
-                               </property>
-                              </widget>
-                             </item>
-                             <item>
-                              <widget class="QLineEdit" name="lineEdit_the_amount">
-                               <property name="maximumSize">
-                                <size>
-                                 <width>300</width>
-                                 <height>60</height>
-                                </size>
-                               </property>
-                               <property name="font">
-                                <font>
-                                 <family>Segoe UI</family>
-                                 <pointsize>15</pointsize>
-                                </font>
-                               </property>
-                               <property name="styleSheet">
-                                <string notr="true">QLineEdit {
-	border: 2px solid rgb(120, 230, 130);
-	border-radius: 20%;
-	color: #FFF;
-	background-color:rgb(44, 44, 44);
-	padding-left: 15px;
-}
-QLineEdit:hover {
-	border: 2px solid rgb(177, 244, 92);
-}
-QLineEdit:focus {
-	border: 2px solid rgb(177, 244, 92);
-	background-color:rgb(68, 68, 68);
-}
-
-
-</string>
-                               </property>
-                               <property name="text">
-                                <string/>
-                               </property>
-                               <property name="placeholderText">
-                                <string>The Amount</string>
-                               </property>
-                              </widget>
-                             </item>
-                             <item>
-                              <widget class="QLineEdit" name="lineEdit_to_the_currency">
-                               <property name="maximumSize">
-                                <size>
-                                 <width>300</width>
-                                 <height>60</height>
-                                </size>
-                               </property>
-                               <property name="font">
-                                <font>
-                                 <family>Segoe UI</family>
-                                 <pointsize>15</pointsize>
-                                </font>
-                               </property>
-                               <property name="styleSheet">
-                                <string notr="true">QLineEdit {
-	border: 2px solid rgb(120, 230, 130);
-	border-radius: 20%;
-	color: #FFF;
-	background-color:rgb(44, 44, 44);
-	padding-left: 15px;
-}
-QLineEdit:hover {
-	border: 2px solid rgb(177, 244, 92);
-}
-QLineEdit:focus {
-	border: 2px solid rgb(177, 244, 92);
-	background-color:rgb(68, 68, 68);
-}
-
-
-</string>
-                               </property>
-                               <property name="text">
-                                <string/>
-                               </property>
-                               <property name="placeholderText">
-                                <string>To the currency</string>
-                               </property>
-                              </widget>
-                             </item>
-                             <item>
-                              <widget class="QLabel" name="label_converter_get_it">
-                               <property name="maximumSize">
-                                <size>
-                                 <width>300</width>
-                                 <height>60</height>
-                                </size>
-                               </property>
-                               <property name="font">
-                                <font>
-                                 <family>Segoe UI</family>
-                                 <pointsize>15</pointsize>
-                                </font>
-                               </property>
-                               <property name="styleSheet">
-                                <string notr="true">QLabel {
-	border: 2px solid rgb(120, 230, 130);
-	border-radius: 20%;
-	color: #FFF;
-	background-color:rgb(44, 44, 44);
-	padding-left: 15px;
-}
-QLabel:hover {
-	border: 2px solid rgb(177, 244, 92);
-}
-QLabel:focus {
-	border: 2px solid rgb(177, 244, 92);
-	background-color:rgb(68, 68, 68);
-}
-
-
-</string>
-                               </property>
-                               <property name="text">
-                                <string>I'll get it</string>
-                               </property>
-                              </widget>
-                             </item>
-                            </layout>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QFrame" name="frame_converter_button">
-                            <property name="maximumSize">
-                             <size>
-                              <width>16777215</width>
-                              <height>100</height>
-                             </size>
-                            </property>
-                            <property name="frameShape">
-                             <enum>QFrame::StyledPanel</enum>
-                            </property>
-                            <property name="frameShadow">
-                             <enum>QFrame::Raised</enum>
-                            </property>
-                            <layout class="QVBoxLayout" name="verticalLayout_31">
-                             <item>
-                              <widget class="QPushButton" name="btn_converter">
-                               <property name="minimumSize">
-                                <size>
-                                 <width>300</width>
-                                 <height>60</height>
-                                </size>
-                               </property>
-                               <property name="maximumSize">
-                                <size>
-                                 <width>300</width>
-                                 <height>60</height>
-                                </size>
-                               </property>
-                               <property name="font">
-                                <font>
-                                 <family>Segoe UI</family>
-                                 <pointsize>20</pointsize>
-                                </font>
-                               </property>
-                               <property name="styleSheet">
-                                <string notr="true">QPushButton {
-	border-radius: 20%;
-	border: 2px solid rgb(120, 230, 130);
-	background-color:rgb(44, 44, 44);
-	color: #FFF
-}
-
-QPushButton:hover {
-	border: 2px solid rgb(177, 244, 92);
-}
-
-QPushButton:pressed {
-	background-color: rgb(120, 230, 130);
-}
-</string>
-                               </property>
-                               <property name="text">
-                                <string>Get</string>
-                               </property>
-                              </widget>
-                             </item>
-                            </layout>
-                           </widget>
-                          </item>
-                         </layout>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QFrame" name="frame_converter_right_inf">
-                         <property name="maximumSize">
-                          <size>
-                           <width>100</width>
-                           <height>16777215</height>
-                          </size>
-                         </property>
-                         <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QFrame" name="frame_converter_right">
-                   <property name="maximumSize">
-                    <size>
-                     <width>100</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item>
-               <widget class="QFrame" name="frame_converter_bottom">
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>100</height>
-                 </size>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
                </widget>
               </item>
              </layout>

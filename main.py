@@ -27,6 +27,7 @@ from ui_splash_screen import Ui_SplashScreen
 from ui_main import Ui_MainWindow
 
 
+WIN_SIZE = 0
 counter = 0
 jumper = 10
 c = CurrencyRates()
@@ -113,7 +114,8 @@ def excel():
 
     sheet['A1'].value = 'Значения/Время'
     sheet['B23'].value = ''
-    book.save('Currency changes.xlsx')
+    save_path = QFileDialog.getSaveFileName()[0]
+    book.save(save_path + '.xlsx')
     book.close()
 
 
@@ -123,6 +125,14 @@ class MainWindow(QMainWindow):
         QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        self.shadow = QGraphicsDropShadowEffect(self)
+        self.shadow.setBlurRadius(20)
+        self.shadow.setXOffset(0)
+        self.shadow.setYOffset(0)
+        self.shadow.setColor(QColor(0, 0, 0, 120))
 
 
         self.url = 'https://ru.investing.com/news/forex-news'
@@ -136,26 +146,63 @@ class MainWindow(QMainWindow):
 
         self.ui.Btn_Toggle.clicked.connect(lambda: UIFunctions.toggleMenu(self, 150, True))
 
-        self.ui.btn_Home.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.page_Home))
+        self.ui.btn_Home.clicked.connect(lambda: UIFunctions.home(self))
         self.ui.btn_Excel.clicked.connect( excel )
-        self.ui.btn_Converter.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.page_Converter))
 
         self.ui.btn_Information.clicked.connect(lambda: UIFunctions.toggleInformation(self, 300, True))
-
-        self.ui.btn_converter.clicked.connect( self.convent_currency )
+        self.ui.btn_Converter.clicked.connect(lambda: UIFunctions.toggleConverter(self, 260, True))
+        self.ui.btn_converter_get.clicked.connect(self.convent_currency)
 
         self.ui.btn_weather.clicked.connect(lambda: Waether.weather(self))
 
         self.ui.btn_get_percent.clicked.connect( self.percentage_difference )
 
+        self.ui.Button_exit.clicked.connect(lambda: self.close())
+        self.ui.Button_minimumsize.clicked.connect(lambda: self.showMinimized())
+        self.ui.Button_oversize.clicked.connect(lambda: self.restore_or_maximize_window())
+
 
         self.update()
-
-
 
         timer_countdown.timeout.connect(self.countdown)
         timer_up.timeout.connect(self.update)
         timer_time_now.timeout.connect(self.time_now)
+
+
+        def moveWindow(event):
+
+            if self.isMaximized() == False:
+
+                if event.buttons() == Qt.LeftButton:
+                    self.move(self.pos() + event.globalPos() - self.clickPosition)
+                    self.clickPosition = event.globalPos()
+                    event.accept()
+            else:
+                if event.buttons() == Qt.LeftButton:
+                    self.restore_or_maximize_window()
+                    self.move(self.pos() + event.globalPos() - self.clickPosition)
+                    self.clickPosition = event.globalPos()
+
+
+
+
+
+        self.ui.frame_top_with_Button.mouseMoveEvent = moveWindow
+    def mousePressEvent(self, event):
+        self.clickPosition = event.globalPos()
+
+
+    def restore_or_maximize_window(self):
+        global WIN_SIZE
+
+        win_status = WIN_SIZE
+
+        if win_status == 0:
+            WIN_SIZE = 1
+            self.showMaximized()
+        else:
+            WIN_SIZE = 0
+            self.showNormal()
 
 
         def setValue(self, slider, labelPercentage, progressBarName, color):
@@ -328,66 +375,64 @@ class MainWindow(QMainWindow):
         global c, b
 
         try:
-            self.ui.label_converter_get_it.setStyleSheet("QLabel {\n"
+            self.ui.label_converter_get_it_3.setStyleSheet("QLabel {\n"
  "\n"
  "	border: 2px solid rgb(120, 230, 130);\n"
- "	border-radius: 20%;\n"
+ "	border-radius: 15px;\n"
  "	color: #FFF;\n"
  "	background-color:rgb(44, 44, 44);\n"
- "	padding-left: 15px;\n"
  "}")
-            input_currency = self.ui.lineEdit_from_the_currency.text().upper()  # Из какой
-            amount = float(self.ui.lineEdit_the_amount.text())  # Сумма
-            output_currency = self.ui.lineEdit_to_the_currency.text().upper()  # В какую
+            input_currency = self.ui.lineEdit_from_the_currency_3.text().upper()  # Из какой
+            amount = float(self.ui.lineEdit_the_amount_3.text())  # Сумма
+            output_currency = self.ui.lineEdit_to_the_currency_3.text().upper()  # В какую
             if input_currency == 'BTC' and output_currency == 'ETH':
                 output_amount = round((Currencies.currency_difference_BTC(self, b) * amount) / float(self.Currencies.currency_difference_ETH(self, c)[1]), 3)
-                self.ui.label_converter_get_it.setText(str(output_amount))
+                self.ui.label_converter_get_it_3.setText(str(output_amount))
             elif input_currency == 'ETH' and output_currency == 'BTC':
                 output_amount = round((float(Currencies.currency_difference_ETH(c)[1]) * amount) / self.Currencies.currency_difference_BTC(self, b), 5)
-                self.ui.label_converter_get_it.setText(str(output_amount))
+                self.ui.label_converter_get_it_3.setText(str(output_amount))
             elif output_currency == 'BTC':
                 output_amount = round(b.convert_to_btc(amount, input_currency), 2)
-                self.ui.label_converter_get_it.setText(str(output_amount))
+                self.ui.label_converter_get_it_3.setText(str(output_amount))
             elif input_currency == output_currency and output_currency == input_currency:
                 output_amount = amount * 1
-                self.ui.label_converter_get_it.setText(str(output_amount))
+                self.ui.label_converter_get_it_3.setText(str(output_amount))
             elif input_currency == 'BTC':
                 output_amount = round(b.convert_btc_to_cur(amount, output_currency), 2)
-                self.ui.label_converter_get_it.setText(str(output_amount))
+                self.ui.label_converter_get_it_3.setText(str(output_amount))
             elif input_currency == 'ETH':
                 convert = c.get_rate('USD', output_currency)
                 output_amount = round(float(Currencies.currency_difference_ETH(self, c)[1]) * amount * float(convert), 2)
-                self.ui.label_converter_get_it.setText(str(output_amount))
+                self.ui.label_converter_get_it_3.setText(str(output_amount))
             elif output_currency == 'ETH':
                 convert = c.get_rate(input_currency, 'USD')
                 output_amount = round(float(Currencies.currency_difference_ETH(self, c)[1]) / (float(convert) * float(amount)), 2)
-                self.ui.label_converter_get_it.setText(str(output_amount))
+                self.ui.label_converter_get_it_3.setText(str(output_amount))
             else:
                 convert = c.get_rate(input_currency, output_currency)
                 output_amount = round(convert * amount, 2)
-                self.ui.label_converter_get_it.setText(str(output_amount))
+                self.ui.label_converter_get_it_3.setText(str(output_amount))
 
         except ValueError:
-            self.ui.label_converter_get_it.setStyleSheet("QLabel {\n"
+            self.ui.label_converter_get_it_3.setStyleSheet("QLabel {\n"
 "\n"
 "	border: 2px solid rgb(215, 50, 75);\n"
-"	border-radius: 20%;\n"
+"	border-radius: 15px;\n"
 "	color: rgb(215, 50, 75);\n"
 "	background-color:rgb(44, 44, 44);\n"
-"	padding-left: 15px;\n"
+"   font-size: 9px;\n"                                    
 "}")
-            self.ui.label_converter_get_it.setText('The amount must be a digit')
+            self.ui.label_converter_get_it_3.setText('The amount must be a digit')
         except forex_python.converter.RatesNotAvailableError:
-            self.ui.label_converter_get_it.setStyleSheet("QLabel {\n"
+            self.ui.label_converter_get_it_3.setStyleSheet("QLabel {\n"
 "\n"
 "	border: 2px solid rgb(215, 50, 75);\n"
-"	border-radius: 20%;\n"
+"	border-radius: 15px;\n"
 "	color: rgb(215, 50, 75);\n"
 "	background-color:rgb(44, 44, 44);\n"
-"	padding-left: 0px;\n"
-"   font-size: 13px;\n"                                                      
+"   font-size: 9px;\n"                                                      
 "}")
-            self.ui.label_converter_get_it.setText('There is no such currency or it is typed incorrectly')
+            self.ui.label_converter_get_it_3.setText('There is no such currency or it is typed incorrectly')
 
 
 

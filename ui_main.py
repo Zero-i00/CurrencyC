@@ -11,12 +11,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PySide2 import QtCore, QtGui, QtWidgets
 
-
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1000, 682)
-        MainWindow.setMinimumSize(QtCore.QSize(1000, 500))
+        MainWindow.resize(1000, 680)
+        MainWindow.setMinimumSize(QtCore.QSize(1000, 620))
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(5)
@@ -28,62 +27,94 @@ class Ui_MainWindow(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.Top_Bar = QtWidgets.QFrame(self.centralwidget)
-        self.Top_Bar.setMaximumSize(QtCore.QSize(16777215, 40))
-        self.Top_Bar.setStyleSheet("background-color: rgb(35, 35, 35);")
-        self.Top_Bar.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.Top_Bar.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.Top_Bar.setLineWidth(0)
-        self.Top_Bar.setObjectName("Top_Bar")
-        self.horizontalLayout = QtWidgets.QHBoxLayout(self.Top_Bar)
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout.setSpacing(0)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.frame_toggle = QtWidgets.QFrame(self.Top_Bar)
-        self.frame_toggle.setMaximumSize(QtCore.QSize(70, 40))
-        self.frame_toggle.setStyleSheet("background-color: rgb(120, 230, 130);")
-        self.frame_toggle.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_toggle.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_toggle.setLineWidth(0)
-        self.frame_toggle.setObjectName("frame_toggle")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.frame_toggle)
-        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_2.setSpacing(0)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.Btn_Toggle = QtWidgets.QPushButton(self.frame_toggle)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Btn_Toggle.sizePolicy().hasHeightForWidth())
-        self.Btn_Toggle.setSizePolicy(sizePolicy)
-        self.Btn_Toggle.setStyleSheet("QPushButton {\n"
+        self.frame_top_with_Button = QtWidgets.QFrame(self.centralwidget)
+        self.frame_top_with_Button.setMinimumSize(QtCore.QSize(0, 0))
+        self.frame_top_with_Button.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.frame_top_with_Button.setStyleSheet("background-color: rgb(35, 35, 35);")
+        self.frame_top_with_Button.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_top_with_Button.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_top_with_Button.setObjectName("frame_top_with_Button")
+        self.verticalLayout_19 = QtWidgets.QVBoxLayout(self.frame_top_with_Button)
+        self.verticalLayout_19.setContentsMargins(0, 5, 0, 0)
+        self.verticalLayout_19.setSpacing(0)
+        self.verticalLayout_19.setObjectName("verticalLayout_19")
+        self.frame_btns_top = QtWidgets.QFrame(self.frame_top_with_Button)
+        self.frame_btns_top.setMinimumSize(QtCore.QSize(100, 0))
+        self.frame_btns_top.setMaximumSize(QtCore.QSize(100, 16777215))
+        self.frame_btns_top.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_btns_top.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_btns_top.setObjectName("frame_btns_top")
+        self.horizontalLayout_30 = QtWidgets.QHBoxLayout(self.frame_btns_top)
+        self.horizontalLayout_30.setContentsMargins(0, 0, 0, 2)
+        self.horizontalLayout_30.setSpacing(0)
+        self.horizontalLayout_30.setObjectName("horizontalLayout_30")
+        self.Button_minimumsize = QtWidgets.QPushButton(self.frame_btns_top)
+        self.Button_minimumsize.setMaximumSize(QtCore.QSize(30, 30))
+        self.Button_minimumsize.setStyleSheet("QPushButton{\n"
+"    border:none;\n"
+"    border-radius:10px;\n"
+"}\n"
 "\n"
-"    color: rgb(120, 230, 130);\n"
-"    border: 0px solid;\n"
+"QPushButton:hover{\n"
+"    background-color: rgb(45, 45, 45);\n"
 "}\n"
 "\n"
 "QPushButton:pressed{\n"
-"    \n"
-"    background-color:  rgb(177, 244, 92);\n"
+"    background-color: rgb(70, 70, 70);\n"
 "}")
-        self.Btn_Toggle.setText("")
+        self.Button_minimumsize.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("icons/toggle.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.Btn_Toggle.setIcon(icon)
-        self.Btn_Toggle.setIconSize(QtCore.QSize(30, 30))
-        self.Btn_Toggle.setAutoRepeatDelay(298)
-        self.Btn_Toggle.setObjectName("Btn_Toggle")
-        self.verticalLayout_2.addWidget(self.Btn_Toggle)
-        self.horizontalLayout.addWidget(self.frame_toggle)
-        self.frame_top = QtWidgets.QFrame(self.Top_Bar)
-        self.frame_top.setStyleSheet("border: none;")
-        self.frame_top.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_top.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_top.setLineWidth(0)
-        self.frame_top.setObjectName("frame_top")
-        self.horizontalLayout.addWidget(self.frame_top)
-        self.verticalLayout.addWidget(self.Top_Bar)
+        icon.addPixmap(QtGui.QPixmap("icons/minimumWin.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.Button_minimumsize.setIcon(icon)
+        self.Button_minimumsize.setIconSize(QtCore.QSize(20, 20))
+        self.Button_minimumsize.setObjectName("Button_minimumsize")
+        self.horizontalLayout_30.addWidget(self.Button_minimumsize)
+        self.Button_oversize = QtWidgets.QPushButton(self.frame_btns_top)
+        self.Button_oversize.setMaximumSize(QtCore.QSize(30, 30))
+        self.Button_oversize.setStyleSheet("QPushButton{\n"
+"    border:none;\n"
+"    border-radius:10px;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: rgb(45, 45, 45);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    background-color: rgb(70, 70, 70);\n"
+"}")
+        self.Button_oversize.setText("")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("icons/maxWin.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.Button_oversize.setIcon(icon1)
+        self.Button_oversize.setIconSize(QtCore.QSize(15, 15))
+        self.Button_oversize.setObjectName("Button_oversize")
+        self.horizontalLayout_30.addWidget(self.Button_oversize)
+        self.Button_exit = QtWidgets.QPushButton(self.frame_btns_top)
+        self.Button_exit.setMaximumSize(QtCore.QSize(30, 30))
+        self.Button_exit.setStyleSheet("QPushButton{\n"
+"    border:none;\n"
+"    border-radius:10px;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: rgb(45, 45, 45);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    background-color: rgb(70, 70, 70);\n"
+"}")
+        self.Button_exit.setText("")
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap("icons/exit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.Button_exit.setIcon(icon2)
+        self.Button_exit.setIconSize(QtCore.QSize(20, 20))
+        self.Button_exit.setObjectName("Button_exit")
+        self.horizontalLayout_30.addWidget(self.Button_exit)
+        self.verticalLayout_19.addWidget(self.frame_btns_top, 0, QtCore.Qt.AlignRight)
+        self.verticalLayout.addWidget(self.frame_top_with_Button)
         self.Content = QtWidgets.QFrame(self.centralwidget)
+        self.Content.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.Content.setStyleSheet("border: none;")
         self.Content.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.Content.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -94,8 +125,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.frame_left_menu = QtWidgets.QFrame(self.Content)
-        self.frame_left_menu.setMinimumSize(QtCore.QSize(70, 0))
-        self.frame_left_menu.setMaximumSize(QtCore.QSize(70, 16777215))
+        self.frame_left_menu.setMinimumSize(QtCore.QSize(70, 300))
+        self.frame_left_menu.setMaximumSize(QtCore.QSize(0, 16777215))
         self.frame_left_menu.setStyleSheet("background-color: rgb(35, 35, 35);\n"
 "border: none;")
         self.frame_left_menu.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -106,6 +137,35 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.Btn_Toggle = QtWidgets.QPushButton(self.frame_left_menu)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Btn_Toggle.sizePolicy().hasHeightForWidth())
+        self.Btn_Toggle.setSizePolicy(sizePolicy)
+        self.Btn_Toggle.setMinimumSize(QtCore.QSize(0, 40))
+        self.Btn_Toggle.setMaximumSize(QtCore.QSize(16777215, 40))
+        self.Btn_Toggle.setStyleSheet("QPushButton {\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(35, 35, 35);\n"
+"    border: 0px solid;\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(120, 230, 130);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"    background-color:  rgb(177, 244, 92)\n"
+"}\n"
+"\n"
+"")
+        self.Btn_Toggle.setText("")
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap("icons/toggle.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.Btn_Toggle.setIcon(icon3)
+        self.Btn_Toggle.setIconSize(QtCore.QSize(30, 30))
+        self.Btn_Toggle.setAutoRepeatDelay(298)
+        self.Btn_Toggle.setObjectName("Btn_Toggle")
+        self.verticalLayout_3.addWidget(self.Btn_Toggle)
         self.btn_Home = QtWidgets.QPushButton(self.frame_left_menu)
         self.btn_Home.setMinimumSize(QtCore.QSize(0, 40))
         self.btn_Home.setLayoutDirection(QtCore.Qt.LeftToRight)
@@ -127,9 +187,9 @@ class Ui_MainWindow(object):
 "\n"
 "\n"
 "")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("icons/Home.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_Home.setIcon(icon1)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap("icons/Home.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_Home.setIcon(icon4)
         self.btn_Home.setIconSize(QtCore.QSize(50, 40))
         self.btn_Home.setShortcut("")
         self.btn_Home.setCheckable(False)
@@ -137,27 +197,6 @@ class Ui_MainWindow(object):
         self.btn_Home.setAutoRepeatDelay(300)
         self.btn_Home.setObjectName("btn_Home")
         self.verticalLayout_3.addWidget(self.btn_Home)
-        self.btn_Converter = QtWidgets.QPushButton(self.frame_left_menu)
-        self.btn_Converter.setMinimumSize(QtCore.QSize(0, 40))
-        self.btn_Converter.setStyleSheet("QPushButton {\n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: rgb(35, 35, 35);\n"
-"    border: 0px solid;\n"
-"    padding-left: 72;    \n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgb(120, 230, 130);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"    background-color:  rgb(177, 244, 92)\n"
-"}\n"
-"")
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("icons/converter.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_Converter.setIcon(icon2)
-        self.btn_Converter.setIconSize(QtCore.QSize(50, 30))
-        self.btn_Converter.setObjectName("btn_Converter")
-        self.verticalLayout_3.addWidget(self.btn_Converter)
         self.btn_Excel = QtWidgets.QPushButton(self.frame_left_menu)
         self.btn_Excel.setMinimumSize(QtCore.QSize(0, 40))
         self.btn_Excel.setStyleSheet("QPushButton {\n"
@@ -173,12 +212,245 @@ class Ui_MainWindow(object):
 "    background-color:  rgb(177, 244, 92)\n"
 "}\n"
 "")
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("icons/excel.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_Excel.setIcon(icon3)
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap("icons/excel.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_Excel.setIcon(icon5)
         self.btn_Excel.setIconSize(QtCore.QSize(50, 25))
         self.btn_Excel.setObjectName("btn_Excel")
         self.verticalLayout_3.addWidget(self.btn_Excel)
+        self.btn_Converter = QtWidgets.QPushButton(self.frame_left_menu)
+        self.btn_Converter.setMinimumSize(QtCore.QSize(0, 40))
+        self.btn_Converter.setStyleSheet("QPushButton {\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(35, 35, 35);\n"
+"    border: 0px solid;\n"
+"    padding-left: 72;    \n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(120, 230, 130);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"    background-color:  rgb(177, 244, 92)\n"
+"}\n"
+"")
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap("icons/converter.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_Converter.setIcon(icon6)
+        self.btn_Converter.setIconSize(QtCore.QSize(50, 30))
+        self.btn_Converter.setObjectName("btn_Converter")
+        self.verticalLayout_3.addWidget(self.btn_Converter)
+        self.frame_Converter = QtWidgets.QFrame(self.frame_left_menu)
+        self.frame_Converter.setMinimumSize(QtCore.QSize(0, 0))
+        self.frame_Converter.setMaximumSize(QtCore.QSize(0, 300))
+        self.frame_Converter.setStyleSheet("")
+        self.frame_Converter.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.frame_Converter.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_Converter.setObjectName("frame_Converter")
+        self.verticalLayout_8 = QtWidgets.QVBoxLayout(self.frame_Converter)
+        self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_8.setSpacing(0)
+        self.verticalLayout_8.setObjectName("verticalLayout_8")
+        self.frame_converter_left_inf_2 = QtWidgets.QFrame(self.frame_Converter)
+        self.frame_converter_left_inf_2.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.frame_converter_left_inf_2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_converter_left_inf_2.setObjectName("frame_converter_left_inf_2")
+        self.verticalLayout_42 = QtWidgets.QVBoxLayout(self.frame_converter_left_inf_2)
+        self.verticalLayout_42.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_42.setSpacing(0)
+        self.verticalLayout_42.setObjectName("verticalLayout_42")
+        self.frame_converter_inf_3 = QtWidgets.QFrame(self.frame_converter_left_inf_2)
+        self.frame_converter_inf_3.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.frame_converter_inf_3.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_converter_inf_3.setObjectName("frame_converter_inf_3")
+        self.horizontalLayout_27 = QtWidgets.QHBoxLayout(self.frame_converter_inf_3)
+        self.horizontalLayout_27.setObjectName("horizontalLayout_27")
+        self.frame_currency_discription = QtWidgets.QFrame(self.frame_converter_inf_3)
+        self.frame_currency_discription.setMaximumSize(QtCore.QSize(100, 16777215))
+        self.frame_currency_discription.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.frame_currency_discription.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_currency_discription.setObjectName("frame_currency_discription")
+        self.verticalLayout_10 = QtWidgets.QVBoxLayout(self.frame_currency_discription)
+        self.verticalLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_10.setSpacing(0)
+        self.verticalLayout_10.setObjectName("verticalLayout_10")
+        self.label_from_the_currency_text = QtWidgets.QLabel(self.frame_currency_discription)
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(9)
+        self.label_from_the_currency_text.setFont(font)
+        self.label_from_the_currency_text.setStyleSheet("color:rgb(69, 69, 69)")
+        self.label_from_the_currency_text.setObjectName("label_from_the_currency_text")
+        self.verticalLayout_10.addWidget(self.label_from_the_currency_text)
+        self.label_the_amount_text = QtWidgets.QLabel(self.frame_currency_discription)
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(9)
+        self.label_the_amount_text.setFont(font)
+        self.label_the_amount_text.setStyleSheet("color: rgb(70, 70, 70);")
+        self.label_the_amount_text.setObjectName("label_the_amount_text")
+        self.verticalLayout_10.addWidget(self.label_the_amount_text)
+        self.label_to_the_currency_text = QtWidgets.QLabel(self.frame_currency_discription)
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(9)
+        self.label_to_the_currency_text.setFont(font)
+        self.label_to_the_currency_text.setStyleSheet("color: rgb(70, 70, 70);")
+        self.label_to_the_currency_text.setObjectName("label_to_the_currency_text")
+        self.verticalLayout_10.addWidget(self.label_to_the_currency_text)
+        self.horizontalLayout_27.addWidget(self.frame_currency_discription)
+        self.frame_currency_values = QtWidgets.QFrame(self.frame_converter_inf_3)
+        self.frame_currency_values.setMaximumSize(QtCore.QSize(85, 16777215))
+        self.frame_currency_values.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.frame_currency_values.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_currency_values.setObjectName("frame_currency_values")
+        self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.frame_currency_values)
+        self.verticalLayout_9.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_9.setSpacing(0)
+        self.verticalLayout_9.setObjectName("verticalLayout_9")
+        self.lineEdit_from_the_currency_3 = QtWidgets.QLineEdit(self.frame_currency_values)
+        self.lineEdit_from_the_currency_3.setMaximumSize(QtCore.QSize(80, 50))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(15)
+        self.lineEdit_from_the_currency_3.setFont(font)
+        self.lineEdit_from_the_currency_3.setStyleSheet("QLineEdit {\n"
+"    border: 2px solid rgb(120, 230, 130);\n"
+"    border-radius: 15px;\n"
+"    color: #FFF;\n"
+"    background-color:rgb(44, 44, 44);\n"
+"}\n"
+"QLineEdit:hover {\n"
+"    border: 2px solid rgb(177, 244, 92);\n"
+"}\n"
+"QLineEdit:focus {\n"
+"    border: 2px solid rgb(177, 244, 92);\n"
+"    background-color:rgb(68, 68, 68);\n"
+"}\n"
+"\n"
+"\n"
+"")
+        self.lineEdit_from_the_currency_3.setText("")
+        self.lineEdit_from_the_currency_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.lineEdit_from_the_currency_3.setPlaceholderText("")
+        self.lineEdit_from_the_currency_3.setObjectName("lineEdit_from_the_currency_3")
+        self.verticalLayout_9.addWidget(self.lineEdit_from_the_currency_3)
+        self.lineEdit_the_amount_3 = QtWidgets.QLineEdit(self.frame_currency_values)
+        self.lineEdit_the_amount_3.setMaximumSize(QtCore.QSize(80, 50))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(15)
+        self.lineEdit_the_amount_3.setFont(font)
+        self.lineEdit_the_amount_3.setStyleSheet("QLineEdit {\n"
+"    border: 2px solid rgb(120, 230, 130);\n"
+"    border-radius: 15px;\n"
+"    color: #FFF;\n"
+"    background-color:rgb(44, 44, 44);\n"
+"}\n"
+"QLineEdit:hover {\n"
+"    border: 2px solid rgb(177, 244, 92);\n"
+"}\n"
+"QLineEdit:focus {\n"
+"    border: 2px solid rgb(177, 244, 92);\n"
+"    background-color:rgb(68, 68, 68);\n"
+"}\n"
+"\n"
+"\n"
+"")
+        self.lineEdit_the_amount_3.setText("")
+        self.lineEdit_the_amount_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.lineEdit_the_amount_3.setPlaceholderText("")
+        self.lineEdit_the_amount_3.setObjectName("lineEdit_the_amount_3")
+        self.verticalLayout_9.addWidget(self.lineEdit_the_amount_3)
+        self.lineEdit_to_the_currency_3 = QtWidgets.QLineEdit(self.frame_currency_values)
+        self.lineEdit_to_the_currency_3.setMaximumSize(QtCore.QSize(80, 50))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(15)
+        self.lineEdit_to_the_currency_3.setFont(font)
+        self.lineEdit_to_the_currency_3.setStyleSheet("QLineEdit {\n"
+"    border: 2px solid rgb(120, 230, 130);\n"
+"    border-radius: 15px;\n"
+"    color: #FFF;\n"
+"    background-color:rgb(44, 44, 44);\n"
+"}\n"
+"QLineEdit:hover {\n"
+"    border: 2px solid rgb(177, 244, 92);\n"
+"}\n"
+"QLineEdit:focus {\n"
+"    border: 2px solid rgb(177, 244, 92);\n"
+"    background-color:rgb(68, 68, 68);\n"
+"}\n"
+"\n"
+"\n"
+"")
+        self.lineEdit_to_the_currency_3.setText("")
+        self.lineEdit_to_the_currency_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.lineEdit_to_the_currency_3.setPlaceholderText("")
+        self.lineEdit_to_the_currency_3.setObjectName("lineEdit_to_the_currency_3")
+        self.verticalLayout_9.addWidget(self.lineEdit_to_the_currency_3)
+        self.horizontalLayout_27.addWidget(self.frame_currency_values, 0, QtCore.Qt.AlignRight)
+        self.verticalLayout_42.addWidget(self.frame_converter_inf_3)
+        self.frame_converter_button_3 = QtWidgets.QFrame(self.frame_converter_left_inf_2)
+        self.frame_converter_button_3.setMaximumSize(QtCore.QSize(16777215, 92))
+        self.frame_converter_button_3.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.frame_converter_button_3.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_converter_button_3.setObjectName("frame_converter_button_3")
+        self.verticalLayout_43 = QtWidgets.QVBoxLayout(self.frame_converter_button_3)
+        self.verticalLayout_43.setContentsMargins(20, 9, 0, 0)
+        self.verticalLayout_43.setSpacing(0)
+        self.verticalLayout_43.setObjectName("verticalLayout_43")
+        self.label_converter_get_it_3 = QtWidgets.QLabel(self.frame_converter_button_3)
+        self.label_converter_get_it_3.setMaximumSize(QtCore.QSize(220, 40))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(15)
+        self.label_converter_get_it_3.setFont(font)
+        self.label_converter_get_it_3.setStyleSheet("QLabel {\n"
+"    border: 2px solid rgb(120, 230, 130);\n"
+"    border-radius: 15px;\n"
+"    color: #FFF;\n"
+"    background-color:rgb(44, 44, 44);\n"
+"}\n"
+"QLabel:hover {\n"
+"    border: 2px solid rgb(177, 244, 92);\n"
+"}\n"
+"QLabel:focus {\n"
+"    border: 2px solid rgb(177, 244, 92);\n"
+"    background-color:rgb(68, 68, 68);\n"
+"}\n"
+"\n"
+"\n"
+"")
+        self.label_converter_get_it_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_converter_get_it_3.setObjectName("label_converter_get_it_3")
+        self.verticalLayout_43.addWidget(self.label_converter_get_it_3)
+        self.btn_converter_get = QtWidgets.QPushButton(self.frame_converter_button_3)
+        self.btn_converter_get.setMinimumSize(QtCore.QSize(200, 40))
+        self.btn_converter_get.setMaximumSize(QtCore.QSize(220, 40))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(20)
+        self.btn_converter_get.setFont(font)
+        self.btn_converter_get.setStyleSheet("QPushButton {\n"
+"    border-radius: 15px;\n"
+"    border: 2px solid rgb(120, 230, 130);\n"
+"    background-color:rgb(44, 44, 44);\n"
+"    color: #FFF\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    border: 2px solid rgb(177, 244, 92);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(120, 230, 130);\n"
+"}\n"
+"")
+        self.btn_converter_get.setObjectName("btn_converter_get")
+        self.verticalLayout_43.addWidget(self.btn_converter_get)
+        self.verticalLayout_42.addWidget(self.frame_converter_button_3)
+        self.verticalLayout_8.addWidget(self.frame_converter_left_inf_2)
+        self.verticalLayout_3.addWidget(self.frame_Converter)
         self.frame_top_menus = QtWidgets.QFrame(self.frame_left_menu)
         self.frame_top_menus.setMinimumSize(QtCore.QSize(70, 0))
         self.frame_top_menus.setMaximumSize(QtCore.QSize(70, 16777215))
@@ -190,7 +462,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_4.setSpacing(0)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
-        self.verticalLayout_3.addWidget(self.frame_top_menus, 0, QtCore.Qt.AlignBottom)
+        self.verticalLayout_3.addWidget(self.frame_top_menus)
         self.horizontalLayout_2.addWidget(self.frame_left_menu)
         self.frame_pages = QtWidgets.QFrame(self.Content)
         self.frame_pages.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -379,9 +651,9 @@ class Ui_MainWindow(object):
 "\n"
 "")
         self.btn_Information.setText("")
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("icons/flag.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_Information.setIcon(icon4)
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap("icons/flag.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_Information.setIcon(icon7)
         self.btn_Information.setObjectName("btn_Information")
         self.horizontalLayout_4.addWidget(self.btn_Information)
         self.verticalLayout_11.addWidget(self.frame_btn_Information)
@@ -443,6 +715,9 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setFamily("Nirmala UI")
         font.setPointSize(20)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.USD.setFont(font)
         self.USD.setStyleSheet("color: rgb(255, 255, 255);\n"
 "padding-left: 20px;\n"
@@ -657,6 +932,9 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setFamily("Nirmala UI")
         font.setPointSize(20)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.OilBrent.setFont(font)
         self.OilBrent.setStyleSheet("color: rgb(255, 255, 255);\n"
 "padding-left: 20px;\n"
@@ -849,6 +1127,9 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setFamily("Nirmala UI")
         font.setPointSize(20)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.Sberbank.setFont(font)
         self.Sberbank.setStyleSheet("color: rgb(255, 255, 255);\n"
 "padding-left: 20px;\n"
@@ -1313,214 +1594,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.addWidget(self.frame_additional_information)
         self.verticalLayout_7.addWidget(self.frame_content_home)
         self.stackedWidget.addWidget(self.page_Home)
-        self.page_Converter = QtWidgets.QWidget()
-        self.page_Converter.setObjectName("page_Converter")
-        self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.page_Converter)
-        self.verticalLayout_9.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_9.setSpacing(0)
-        self.verticalLayout_9.setObjectName("verticalLayout_9")
-        self.frame_main_converter = QtWidgets.QFrame(self.page_Converter)
-        self.frame_main_converter.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.frame_main_converter.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_main_converter.setObjectName("frame_main_converter")
-        self.horizontalLayout_30 = QtWidgets.QHBoxLayout(self.frame_main_converter)
-        self.horizontalLayout_30.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_30.setSpacing(0)
-        self.horizontalLayout_30.setObjectName("horizontalLayout_30")
-        self.frame_converter_left = QtWidgets.QFrame(self.frame_main_converter)
-        self.frame_converter_left.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.frame_converter_left.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_converter_left.setObjectName("frame_converter_left")
-        self.verticalLayout_28 = QtWidgets.QVBoxLayout(self.frame_converter_left)
-        self.verticalLayout_28.setObjectName("verticalLayout_28")
-        self.groupBox_converter = QtWidgets.QGroupBox(self.frame_converter_left)
-        self.groupBox_converter.setMaximumSize(QtCore.QSize(600, 16777215))
-        font = QtGui.QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(20)
-        self.groupBox_converter.setFont(font)
-        self.groupBox_converter.setStyleSheet("QGroupBox {\n"
-"    border-radius: 30px;\n"
-"    color: rgb(120, 230, 130);\n"
-"    border: 2px solid rgb(120, 230, 130);\n"
-"}\n"
-"")
-        self.groupBox_converter.setObjectName("groupBox_converter")
-        self.horizontalLayout_31 = QtWidgets.QHBoxLayout(self.groupBox_converter)
-        self.horizontalLayout_31.setContentsMargins(9, 40, 9, 9)
-        self.horizontalLayout_31.setSpacing(6)
-        self.horizontalLayout_31.setObjectName("horizontalLayout_31")
-        self.frame_converter_left_inf = QtWidgets.QFrame(self.groupBox_converter)
-        self.frame_converter_left_inf.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_converter_left_inf.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_converter_left_inf.setObjectName("frame_converter_left_inf")
-        self.verticalLayout_29 = QtWidgets.QVBoxLayout(self.frame_converter_left_inf)
-        self.verticalLayout_29.setObjectName("verticalLayout_29")
-        self.frame_converter_inf = QtWidgets.QFrame(self.frame_converter_left_inf)
-        self.frame_converter_inf.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_converter_inf.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_converter_inf.setObjectName("frame_converter_inf")
-        self.verticalLayout_30 = QtWidgets.QVBoxLayout(self.frame_converter_inf)
-        self.verticalLayout_30.setObjectName("verticalLayout_30")
-        self.lineEdit_from_the_currency = QtWidgets.QLineEdit(self.frame_converter_inf)
-        self.lineEdit_from_the_currency.setMaximumSize(QtCore.QSize(300, 60))
-        font = QtGui.QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(15)
-        self.lineEdit_from_the_currency.setFont(font)
-        self.lineEdit_from_the_currency.setStyleSheet("QLineEdit {\n"
-"    border: 2px solid rgb(120, 230, 130);\n"
-"    border-radius: 20%;\n"
-"    color: #FFF;\n"
-"    background-color:rgb(44, 44, 44);\n"
-"    padding-left: 15px;\n"
-"}\n"
-"QLineEdit:hover {\n"
-"    border: 2px solid rgb(177, 244, 92);\n"
-"}\n"
-"QLineEdit:focus {\n"
-"    border: 2px solid rgb(177, 244, 92);\n"
-"    background-color:rgb(68, 68, 68);\n"
-"}\n"
-"\n"
-"\n"
-"")
-        self.lineEdit_from_the_currency.setText("")
-        self.lineEdit_from_the_currency.setObjectName("lineEdit_from_the_currency")
-        self.verticalLayout_30.addWidget(self.lineEdit_from_the_currency)
-        self.lineEdit_the_amount = QtWidgets.QLineEdit(self.frame_converter_inf)
-        self.lineEdit_the_amount.setMaximumSize(QtCore.QSize(300, 60))
-        font = QtGui.QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(15)
-        self.lineEdit_the_amount.setFont(font)
-        self.lineEdit_the_amount.setStyleSheet("QLineEdit {\n"
-"    border: 2px solid rgb(120, 230, 130);\n"
-"    border-radius: 20%;\n"
-"    color: #FFF;\n"
-"    background-color:rgb(44, 44, 44);\n"
-"    padding-left: 15px;\n"
-"}\n"
-"QLineEdit:hover {\n"
-"    border: 2px solid rgb(177, 244, 92);\n"
-"}\n"
-"QLineEdit:focus {\n"
-"    border: 2px solid rgb(177, 244, 92);\n"
-"    background-color:rgb(68, 68, 68);\n"
-"}\n"
-"\n"
-"\n"
-"")
-        self.lineEdit_the_amount.setText("")
-        self.lineEdit_the_amount.setObjectName("lineEdit_the_amount")
-        self.verticalLayout_30.addWidget(self.lineEdit_the_amount)
-        self.lineEdit_to_the_currency = QtWidgets.QLineEdit(self.frame_converter_inf)
-        self.lineEdit_to_the_currency.setMaximumSize(QtCore.QSize(300, 60))
-        font = QtGui.QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(15)
-        self.lineEdit_to_the_currency.setFont(font)
-        self.lineEdit_to_the_currency.setStyleSheet("QLineEdit {\n"
-"    border: 2px solid rgb(120, 230, 130);\n"
-"    border-radius: 20%;\n"
-"    color: #FFF;\n"
-"    background-color:rgb(44, 44, 44);\n"
-"    padding-left: 15px;\n"
-"}\n"
-"QLineEdit:hover {\n"
-"    border: 2px solid rgb(177, 244, 92);\n"
-"}\n"
-"QLineEdit:focus {\n"
-"    border: 2px solid rgb(177, 244, 92);\n"
-"    background-color:rgb(68, 68, 68);\n"
-"}\n"
-"\n"
-"\n"
-"")
-        self.lineEdit_to_the_currency.setText("")
-        self.lineEdit_to_the_currency.setObjectName("lineEdit_to_the_currency")
-        self.verticalLayout_30.addWidget(self.lineEdit_to_the_currency)
-        self.label_converter_get_it = QtWidgets.QLabel(self.frame_converter_inf)
-        self.label_converter_get_it.setMaximumSize(QtCore.QSize(300, 60))
-        font = QtGui.QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(15)
-        self.label_converter_get_it.setFont(font)
-        self.label_converter_get_it.setStyleSheet("QLabel {\n"
-"    border: 2px solid rgb(120, 230, 130);\n"
-"    border-radius: 20%;\n"
-"    color: #FFF;\n"
-"    background-color:rgb(44, 44, 44);\n"
-"    padding-left: 15px;\n"
-"}\n"
-"QLabel:hover {\n"
-"    border: 2px solid rgb(177, 244, 92);\n"
-"}\n"
-"QLabel:focus {\n"
-"    border: 2px solid rgb(177, 244, 92);\n"
-"    background-color:rgb(68, 68, 68);\n"
-"}\n"
-"\n"
-"\n"
-"")
-        self.label_converter_get_it.setObjectName("label_converter_get_it")
-        self.verticalLayout_30.addWidget(self.label_converter_get_it)
-        self.verticalLayout_29.addWidget(self.frame_converter_inf)
-        self.frame_converter_button = QtWidgets.QFrame(self.frame_converter_left_inf)
-        self.frame_converter_button.setMaximumSize(QtCore.QSize(16777215, 100))
-        self.frame_converter_button.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_converter_button.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_converter_button.setObjectName("frame_converter_button")
-        self.verticalLayout_31 = QtWidgets.QVBoxLayout(self.frame_converter_button)
-        self.verticalLayout_31.setObjectName("verticalLayout_31")
-        self.btn_converter = QtWidgets.QPushButton(self.frame_converter_button)
-        self.btn_converter.setMinimumSize(QtCore.QSize(300, 60))
-        self.btn_converter.setMaximumSize(QtCore.QSize(300, 60))
-        font = QtGui.QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(20)
-        self.btn_converter.setFont(font)
-        self.btn_converter.setStyleSheet("QPushButton {\n"
-"    border-radius: 20%;\n"
-"    border: 2px solid rgb(120, 230, 130);\n"
-"    background-color:rgb(44, 44, 44);\n"
-"    color: #FFF\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"    border: 2px solid rgb(177, 244, 92);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: rgb(120, 230, 130);\n"
-"}\n"
-"")
-        self.btn_converter.setObjectName("btn_converter")
-        self.verticalLayout_31.addWidget(self.btn_converter)
-        self.verticalLayout_29.addWidget(self.frame_converter_button)
-        self.horizontalLayout_31.addWidget(self.frame_converter_left_inf)
-        self.frame_converter_right_inf = QtWidgets.QFrame(self.groupBox_converter)
-        self.frame_converter_right_inf.setMaximumSize(QtCore.QSize(100, 16777215))
-        self.frame_converter_right_inf.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_converter_right_inf.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_converter_right_inf.setObjectName("frame_converter_right_inf")
-        self.horizontalLayout_31.addWidget(self.frame_converter_right_inf)
-        self.verticalLayout_28.addWidget(self.groupBox_converter)
-        self.horizontalLayout_30.addWidget(self.frame_converter_left)
-        self.frame_converter_right = QtWidgets.QFrame(self.frame_main_converter)
-        self.frame_converter_right.setMaximumSize(QtCore.QSize(100, 16777215))
-        self.frame_converter_right.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.frame_converter_right.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_converter_right.setObjectName("frame_converter_right")
-        self.horizontalLayout_30.addWidget(self.frame_converter_right)
-        self.verticalLayout_9.addWidget(self.frame_main_converter)
-        self.frame_converter_bottom = QtWidgets.QFrame(self.page_Converter)
-        self.frame_converter_bottom.setMaximumSize(QtCore.QSize(16777215, 100))
-        self.frame_converter_bottom.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.frame_converter_bottom.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_converter_bottom.setObjectName("frame_converter_bottom")
-        self.verticalLayout_9.addWidget(self.frame_converter_bottom)
-        self.stackedWidget.addWidget(self.page_Converter)
         self.verticalLayout_5.addWidget(self.stackedWidget)
         self.horizontalLayout_2.addWidget(self.frame_pages)
         self.verticalLayout.addWidget(self.Content)
@@ -1534,8 +1607,13 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.btn_Home.setText(_translate("MainWindow", "       Home"))
-        self.btn_Converter.setText(_translate("MainWindow", "        Converter"))
         self.btn_Excel.setText(_translate("MainWindow", "         Excel"))
+        self.btn_Converter.setText(_translate("MainWindow", "        Converter"))
+        self.label_from_the_currency_text.setText(_translate("MainWindow", "From the currency"))
+        self.label_the_amount_text.setText(_translate("MainWindow", "The amount"))
+        self.label_to_the_currency_text.setText(_translate("MainWindow", "To the currency"))
+        self.label_converter_get_it_3.setText(_translate("MainWindow", "I\'ll get it"))
+        self.btn_converter_get.setText(_translate("MainWindow", "Get"))
         self.label_TO_THE_RUB.setText(_translate("MainWindow", "To the RUB"))
         self.group_currencies.setTitle(_translate("MainWindow", "Currencies"))
         self.USD.setText(_translate("MainWindow", "USD"))
@@ -1598,12 +1676,6 @@ class Ui_MainWindow(object):
         self.lineEdit_enter_currency_percent.setPlaceholderText(_translate("MainWindow", "CURRENCY"))
         self.btn_get_percent.setText(_translate("MainWindow", "Get"))
         self.label_percent_inf.setText(_translate("MainWindow", "0,00%"))
-        self.groupBox_converter.setTitle(_translate("MainWindow", "Converter"))
-        self.lineEdit_from_the_currency.setPlaceholderText(_translate("MainWindow", "From The currency"))
-        self.lineEdit_the_amount.setPlaceholderText(_translate("MainWindow", "The Amount"))
-        self.lineEdit_to_the_currency.setPlaceholderText(_translate("MainWindow", "To the currency"))
-        self.label_converter_get_it.setText(_translate("MainWindow", "I\'ll get it"))
-        self.btn_converter.setText(_translate("MainWindow", "Get"))
 
 
 if __name__ == "__main__":
